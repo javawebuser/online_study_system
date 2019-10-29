@@ -11,7 +11,13 @@ public class userService {
     @Autowired
     userDao userDao;
 
-    public User selectBlog(User user){
-        return userDao.selectBlog(user);
+    //查询用户名是否存在
+    public User selectUserByName(String username){
+        return userDao.selectUserByName(username);
+    }
+
+    //查询用户角色权限
+    public User selectUserRole(User user){
+        return userDao.selectUserRole(user);
     };
 }

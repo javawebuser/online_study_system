@@ -5,5 +5,6 @@ import com.cqgcxy.online_study_system.entity.User;
 import java.util.List;
 
 public interface userDao {
-    User selectBlog(User user);
+    User selectUserByName(String username);
+    User selectUserRole(User user);
 }

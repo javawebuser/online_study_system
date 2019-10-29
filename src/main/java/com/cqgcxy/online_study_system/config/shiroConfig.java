@@ -50,6 +50,7 @@ public class shiroConfig {
          */
         map.put("/add","authc");
         map.put("/update","authc");
+        map.put("/login","anon");
         //修改调整的登录页面
         shiroFilterFactoryBean.setLoginUrl("/login");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
