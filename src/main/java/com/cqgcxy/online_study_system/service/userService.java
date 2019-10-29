@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 public class userService {
 
     @Autowired
-    userDao userMapper;
+    userDao userDao;
 
-    public User selectBlog(){
-        return userMapper.selectBlog();
+    public User selectBlog(User user){
+        return userDao.selectBlog(user);
     };
 }

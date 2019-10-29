@@ -1,5 +1,7 @@
 package com.cqgcxy.online_study_system.entity;
 
+import java.util.List;
+
 /**
  * @Author:chenlong
  * @DATE:2019/10/28
@@ -11,6 +13,24 @@ public class User {
     private String username;//用户名
     private String password;//用户密码
     private Integer role_id;//角色id
+    private Role role;
+    private List<Permission> permission;
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public List<Permission> getPermission() {
+        return permission;
+    }
+
+    public void setPermission(List<Permission> permission) {
+        this.permission = permission;
+    }
 
     public Integer getUser_id() {
         return user_id;
