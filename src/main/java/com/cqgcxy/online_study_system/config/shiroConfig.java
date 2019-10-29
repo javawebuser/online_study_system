@@ -1,5 +1,6 @@
 package com.cqgcxy.online_study_system.config;
 
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.cqgcxy.online_study_system.real.myRealm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -51,9 +52,25 @@ public class shiroConfig {
         map.put("/add","authc");
         map.put("/update","authc");
         map.put("/login","anon");
+        map.put("/add","perms[角色管理]");
+        map.put("/update","perms[用户管理]");
+        map.put("/batch","perms[批次管理]");
+        map.put("/course","perms[课程管理]");
+        /*map.put("/update","perms[user:update]");*/
         //修改调整的登录页面
         shiroFilterFactoryBean.setLoginUrl("/login");
+        //设置未授权提示页面
+        shiroFilterFactoryBean.setUnauthorizedUrl("/authorizedUrl");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
         return shiroFilterFactoryBean;
+    }
+
+    /**
+     * 配置ShiroDialect，用于thymeleaf和shiro标签配合使用
+     * @return
+     */
+    @Bean
+    public ShiroDialect getShiroDialect(){
+        return new ShiroDialect();
     }
 }

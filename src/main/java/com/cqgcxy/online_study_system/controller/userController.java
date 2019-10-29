@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -69,5 +70,22 @@ public class userController {
     public ModelAndView update(){
         ModelAndView modelAndView = new ModelAndView("/user/update");
         return modelAndView;
+    }
+
+    @RequestMapping("/batch")
+    public ModelAndView batch(){
+        ModelAndView modelAndView = new ModelAndView("/user/batch");
+        return modelAndView;
+    }
+
+    @RequestMapping("/course")
+    public ModelAndView course(){
+        ModelAndView modelAndView = new ModelAndView("/user/course");
+        return modelAndView;
+    }
+
+    @RequestMapping("/authorizedUrl")
+    public String authorizedUrl(){
+        return "/authorizedUrl";
     }
 }

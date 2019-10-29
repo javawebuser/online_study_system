@@ -1,11 +1,15 @@
 package com.cqgcxy.online_study_system.real;
 
+import com.cqgcxy.online_study_system.entity.Permission;
 import com.cqgcxy.online_study_system.entity.User;
 import com.cqgcxy.online_study_system.service.userService;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.swing.*;
@@ -27,7 +31,17 @@ public class myRealm extends AuthorizingRealm {
     userService userService;
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        return null;
+        //给资源进行授权
+        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+        //添加资源的授权字符串
+        Subject subject = SecurityUtils.getSubject();
+        User user=(User)subject.getPrincipal();
+
+        User userRole = userService.selectUserRole(user);
+        for(Permission permission : userRole.getPermission()){
+            info.addStringPermission(permission.getPer_name());
+        }
+        return info;
     }
 
     /**
@@ -48,6 +62,6 @@ public class myRealm extends AuthorizingRealm {
             return null;
         }
 
-        return new SimpleAuthenticationInfo("", user.getPassword(),"");
+        return new SimpleAuthenticationInfo(user, user.getPassword(),"");
     }
 }

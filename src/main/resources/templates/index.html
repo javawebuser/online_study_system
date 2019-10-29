@@ -1,11 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-    <a href="/add">add</a>
-    <a href="/update">update</a>
+    <div shiro:hasPermission="角色管理">
+        <a href="/add">add</a>
+    </div>
+    <div shiro:hasPermission="用户管理">
+        <a href="/update">update</a>
+    </div>
+    <div shiro:hasPermission="批次管理">
+        <a href="/batch">batch</a>
+    </div>
+    <div shiro:hasPermission="课程管理">
+        <a href="/course">course</a>
+    </div>
 </body>
 </html>
