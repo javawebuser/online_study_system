@@ -7,7 +7,12 @@ spring:
     url: jdbc:mysql://localhost/online_study_system?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf-8
     #   禁用缓存
   thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
     cache: false
+  mvc:
+    static-path-pattern: /**
 mybatis:
   config-location: classpath:mybatis/mybatis-config.xml #指定全局配置文件的位置
   mapper-locations: classpath:mybatis/mapper/*.xml  #指定sql映射文件的位置
+

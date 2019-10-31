@@ -3,13 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link href="css/auth.css" th:href="@{/css/auth.css}" rel="stylesheet">
 </head>
+
 <body>
-    <h3 th:text="${msg}" style="color: red"></h3>
-    <form method="post" action="/user">
-        <input type="text" name="username"/>
-        <input type="text" name="password"/>
-        <input type="submit" value="login"/>
-    </form>
+<div class="lowin">
+    <div class="lowin-wrapper">
+        <div class="lowin-box lowin-login">
+            <div class="lowin-box-inner">
+                <form action="/user" method="post" th:action="@{/user}">
+                    <p>在线学习系统登录</p>
+                    <div class="lowin-group">
+                        <label>用户名</label>
+                        <input type="text"  name="username" required="" class="lowin-input">
+                    </div>
+                    <div class="lowin-group password-group">
+                        <label>密码</label>
+                        <input type="password" name="password" required="" class="lowin-input">
+                    </div>
+                    <!--判断-->
+                    <p style="color: red" th:text="${msg}" th:if="${not #strings.isEmpty(msg)}"></p>
+                    <button type="submit" class="lowin-btn login-btn">
+                        登录
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+</script>
 </body>
 </html>
