@@ -10,6 +10,7 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,15 +30,20 @@ public class userController {
     userService userService;
 
     @RequestMapping("/login")
-    public String login(){
-        return "/login";
+    public String login(HttpServletRequest request){
+        HttpSession session=request.getSession();
+        if(session.getAttribute("user")!=null) {
+            return "redirect:/index";
+        }else {
+            return "/login";
+        }
     }
 
 
     @RequestMapping("/user")
     public String username(@RequestParam("username") String username,
                            @RequestParam("password") String password,
-                           Model model,HttpSession session){
+                           Model model, HttpServletRequest request){
         /**
          * 使用Shiro编写认证操作
          */
@@ -47,10 +53,11 @@ public class userController {
         //2.封装用户数据
         UsernamePasswordToken token = new UsernamePasswordToken(username,password);
         //3.执行登录方法
+        HttpSession session=request.getSession();
         try {
             subject.login(token);
             User user=(User)subject.getPrincipal();
-            session.setAttribute("loginUser",user);
+            session.setAttribute("user",user);
             //登录成功
             return "redirect:/index";
         } catch (UnknownAccountException e) {
@@ -66,33 +73,14 @@ public class userController {
     }
 
     @RequestMapping("/index")
-    public ModelAndView index(HttpServletRequest request){
-        ModelAndView mv = new ModelAndView("/index");
-        return mv;
-    }
-
-    @RequestMapping("/add")
-    public ModelAndView add(){
-        ModelAndView modelAndView = new ModelAndView("/user/add");
-        return modelAndView;
-    }
-
-    @RequestMapping("/update")
-    public ModelAndView update(){
-        ModelAndView modelAndView = new ModelAndView("/user/update");
-        return modelAndView;
-    }
-
-    @RequestMapping("/batch")
-    public ModelAndView batch(){
-        ModelAndView modelAndView = new ModelAndView("/user/batch");
-        return modelAndView;
-    }
-
-    @RequestMapping("/course")
-    public ModelAndView course(){
-        ModelAndView modelAndView = new ModelAndView("/user/course");
-        return modelAndView;
+    public String index(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute("user");
+        if (session.getAttribute("user")!=null){
+            return "/index";
+        }else{
+            return "redirect:login";
+        }
     }
 
     @RequestMapping("/authorizedUrl")
@@ -110,7 +98,7 @@ public class userController {
     public ResultMsg exit_submit(HttpServletRequest request,String name) {
         if(name.equals("11")) {
             HttpSession session=request.getSession();
-            session.invalidate();
+            session.removeAttribute("user");
             return new ResultMsg(1, "退出!");
         }
         return new ResultMsg(0, "退出失败!");
