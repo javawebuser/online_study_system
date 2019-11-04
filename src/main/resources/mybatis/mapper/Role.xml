@@ -6,4 +6,12 @@
     <select id="selectRole" resultType="com.cqgcxy.online_study_system.entity.Role">
         select * from role
     </select>
+
+    <update id="updateRolrStatusRun" parameterType="int">
+        update role set status=1 where role_id=#{role_id}
+    </update>
+
+    <update id="updateRolrStatusStop" parameterType="int">
+        update role set status=0 where role_id=#{role_id}
+    </update>
 </mapper>

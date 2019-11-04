@@ -9,6 +9,7 @@ public class Role {
 
     private Integer role_id;//角色id
     private String role_name;//角色名字
+    private Integer status;//角色状态
 
     public Integer getRole_id() {
         return role_id;
@@ -24,5 +25,13 @@ public class Role {
 
     public void setRole_name(String role_name) {
         this.role_name = role_name;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

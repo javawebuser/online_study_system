@@ -15,4 +15,12 @@ public class roleService {
     public List<Role> selectRole(){
         return roleDao.selectRole();
     };
+
+    public int updateRolrStatusRunStop(int role_id,int status){
+        if (status==0){
+            return roleDao.updateRolrStatusRun(role_id);
+        }else {
+            return roleDao.updateRolrStatusStop(role_id);
+        }
+    };
 }
