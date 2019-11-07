@@ -2,12 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>欢迎页面-X-admin2.2</title>
-    <link  href="css/font.css" th:href="@{/css/font.css}" rel="stylesheet">
-    <link  href="css/xadmin.css" th:href="@{/css/xadmin.css}" rel="stylesheet">
-    <script src="lib/layui/layui.js" charset="utf-8" th:src="@{/lib/layui/layui.js}"></script>
-    <script type="text/javascript" src="js/xadmin.js" th:src="@{/js/xadmin.js}"></script>
-    <script type="text/javascript" src="js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+    <title>角色管理</title>
+    <link href="static/css/font.css" th:href="@{/static/css/font.css}" rel="stylesheet">
+    <link href="static/css/xadmin.css" th:href="@{/static/css/xadmin.css}" rel="stylesheet">
+    <script src="static/lib/layui/layui.js" charset="utf-8" th:src="@{/static/lib/layui/layui.js}"></script>
+    <script type="text/javascript" src="static/js/xadmin.js" th:src="@{/static/js/xadmin.js}"></script>
+    <script type="text/javascript" src="static/js/jquery.min.js" th:src="@{/static/js/jquery.min.js}"></script>
 </head>
 <body>
 <div class="x-nav">
@@ -31,7 +31,7 @@
                 </div>
                 <div class="layui-card-header">
                     <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-                    <button class="layui-btn" onclick="xadmin.open('添加角色','./member-add.html',600,400)"><i class="layui-icon"></i>添加角色</button>
+                    <button class="layui-btn" onclick="xadmin.open('添加角色','/roleAdd',800,500)"><i class="layui-icon"></i>添加角色</button>
                 </div>
                 <div class="layui-card-body layui-table-body layui-table-main">
                     <table class="layui-table layui-form">
@@ -42,6 +42,7 @@
                             </th>
                             <th>ID</th>
                             <th>角色名字</th>
+                            <th>拥有权限</th>
                             <th>状态</th>
                             <th>操作</th></tr>
                         </thead>
@@ -50,8 +51,13 @@
                             <td>
                                 <input type="checkbox" name="id" value="1"   lay-skin="primary">
                             </td>
-                            <td th:text="${role.role_id}">1</td>
+                            <td th:text="${role.role_id}"></td>
                             <td th:text="${role.role_name}"></td>
+                            <td>
+                                <div th:each="permissions:${role.permissions}">
+                                    <p th:text="${permissions.per_name}"></p>
+                                </div>
+                            </td>
                             <td class="td-status">
                                 <span  th:text="${role.status}==1?'已启用':'已停用'"
                                       th:classappend="${role.status}==1 ? 'layui-btn layui-btn-normal layui-btn-mini' : 'layui-btn layui-btn-normal layui-btn-mini layui-btn-disabled'"
@@ -60,9 +66,8 @@
                                 <a onclick="member_stop(this)" th:rel="${role.role_id}" href="javascript:;"  th:title="${role.status}==1?'启用':'停用'">
                                     <i class="layui-icon">&#xe601;</i>
                                 </a>
-                                <a title="编辑"  onclick="xadmin.open('编辑','member-edit.html',600,400)" href="javascript:;">
+                                <a title="编辑"  th:onclick="xadmin.open('编辑','/roleById?role_id='+[[${priceBlock.key}]]+'',800,500)" href="javascript:;">
                                     <i class="layui-icon">&#xe642;</i>
-                                </a>
                             </td>
                         </tr>
                         </tbody>
@@ -117,7 +122,12 @@
 
     /*用户-停用*/
     function member_stop(obj){
-        layer.confirm('确认要停用吗？',function(index){
+        if($(obj).attr('title')=='启用'){
+            var msg = "确认要停用吗？";
+        }else {
+            var msg = "确认要启用吗？";
+        };
+        layer.confirm(msg,function(index){
 
             if($(obj).attr('title')=='启用'){
                 var url = "/updateRolrStatusRunStop";

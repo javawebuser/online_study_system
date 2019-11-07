@@ -4,18 +4,18 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cqgcxy.online_study_system.dao.userDao">
     <resultMap id="User" type="com.cqgcxy.online_study_system.entity.User">
-        <id property="user_id" column="user_id"></id>
-        <result property="username" column="username"></result>
-        <result property="password" column="password"></result>
-        <result property="role_id" column="role_id"></result>
-        <association property="role" javaType="com.cqgcxy.online_study_system.entity.Role">
-            <id property="role_id" column="role_id"></id>
-            <result property="role_name" column="role_name"></result>
-        </association>
-        <collection property="permission" ofType="com.cqgcxy.online_study_system.entity.Permission">
-            <id property="per_id" column="per_id"></id>
-            <result property="per_name" column="per_name"></result>
-        </collection>
+    <id property="user_id" column="user_id"></id>
+    <result property="username" column="username"></result>
+    <result property="password" column="password"></result>
+    <result property="role_id" column="role_id"></result>
+    <association property="role" javaType="com.cqgcxy.online_study_system.entity.Role">
+        <id property="role_id" column="role_id"></id>
+        <result property="role_name" column="role_name"></result>
+    </association>
+    <collection property="permission" ofType="com.cqgcxy.online_study_system.entity.Permission">
+        <id property="per_id" column="per_id"></id>
+        <result property="per_name" column="per_name"></result>
+    </collection>
     </resultMap>
     <select id="selectUserRole" parameterType="com.cqgcxy.online_study_system.entity.User" resultMap="User">
         select user.user_id,user.username,role.role_name,permission.per_id,permission.per_name,role.role_id

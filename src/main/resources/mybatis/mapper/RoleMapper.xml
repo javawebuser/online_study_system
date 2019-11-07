@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cqgcxy.online_study_system.dao.roleDao">
+    <resultMap id="Role" type="com.cqgcxy.online_study_system.entity.Role">
+        <id property="role_id" column="role_id"></id>
+        <result property="role_name" column="role_name"></result>
+        <result property="status" column="status"></result>
+        <collection property="permissions" ofType="com.cqgcxy.online_study_system.entity.Permission">
+            <id property="per_id" column="per_id"></id>
+            <result property="per_name" column="per_name"></result>
+        </collection>
+    </resultMap>
+    <select id="selectRole" resultMap="Role">
+        select * from role,permission,role_permission where role.role_id=role_permission.role_id and permission.per_id=role_permission.per_id
+    </select>
+
+    <select id="selectRoleById" parameterType="int" resultMap="Role">
+        select * from role,permission,role_permission where role.role_id=role_permission.role_id and permission.per_id=role_permission.per_id and role_id=#{role_id}
+    </select>
+
+    <insert id="insetRole" parameterType="com.cqgcxy.online_study_system.entity.Role" useGeneratedKeys="true" keyProperty="role_id">
+        insert into role (role_name,status) values (#{role_name},0)
+    </insert>
+
+    <update id="updateRolrStatusRun" parameterType="int">
+        update role set status=1 where role_id=#{role_id}
+    </update>
+
+    <update id="updateRolrStatusStop" parameterType="int">
+        update role set status=0 where role_id=#{role_id}
+    </update>
+</mapper>
