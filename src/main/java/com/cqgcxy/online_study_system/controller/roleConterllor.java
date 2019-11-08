@@ -24,6 +24,10 @@ public class roleConterllor {
     @Autowired
     permissionService permissionService;
 
+    /**
+     * 角色列表
+     * @return
+     */
     @RequestMapping("/roleList")
     public ModelAndView roleList(){
         List<Role> list = roleService.selectRole();
@@ -35,6 +39,10 @@ public class roleConterllor {
         return view;
     }
 
+    /**
+     * 角色添加页面
+     * @return
+     */
     @RequestMapping("/roleAdd")
     public ModelAndView roleAdd(){
         ModelAndView view = new ModelAndView("/management/role/roleAdd");
@@ -43,6 +51,11 @@ public class roleConterllor {
         return view;
     }
 
+    /**
+     * 角色修改页面
+     * @param role_id
+     * @return
+     */
     @RequestMapping("/roleById")
     public ModelAndView roleById(@RequestParam("role_id")String role_id){
         ModelAndView view = new ModelAndView("/management/role/roleEdit");
@@ -53,6 +66,12 @@ public class roleConterllor {
         return view;
     }
 
+    /**
+     * 角色添加提交
+     * @param role_name
+     * @param per
+     * @return
+     */
     @ResponseBody
     @RequestMapping("/roleAdd_submit")
     public ResultMsg roleAdd_submit(@RequestParam("role_name") String role_name,
@@ -67,6 +86,36 @@ public class roleConterllor {
         }
     }
 
+    /**
+     * 角色修改提交
+     * @param role_id
+     * @param role_name
+     * @param per
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/roleAdd_Edit")
+    public ResultMsg roleAdd_Edit(  @RequestParam("role_id") String role_id,
+                                    @RequestParam("role_name") String role_name,
+                                    @RequestParam("per") String per []){
+        Role role = new Role();
+        role.setRole_id(Integer.parseInt(role_id));
+        role.setRole_name(role_name);
+
+        int i = roleService.updateRolrAdmin(role,per);
+        if (i==1){
+            return new ResultMsg(1,"成功");
+        }else {
+            return new ResultMsg(0,"失败");
+        }
+    }
+
+    /**
+     * 启用和停用角色
+     * @param role_id
+     * @param status
+     * @return
+     */
     @ResponseBody
     @RequestMapping("updateRolrStatusRunStop")
     public ResultMsg updateRolrStatusRunStop(String role_id,String status){

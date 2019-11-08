@@ -12,6 +12,7 @@ public interface roleDao {
     List<Role> selectRole();
     //修改角色状态
     Role selectRoleById(int role_id);
+    int updateRolrAdmin(Role role);
     int updateRolrStatusRun(int role_id);
     int updateRolrStatusStop(int role_id);
     int insetRole(Role role);

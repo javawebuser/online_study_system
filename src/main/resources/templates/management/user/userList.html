@@ -60,7 +60,7 @@
                             </td>
                             <td class="td-status">
                                 <span  th:text="${role.status}==1?'已启用':'已停用'"
-                                      th:classappend="${role.status}==1 ? 'layui-btn layui-btn-normal layui-btn-mini' : 'layui-btn layui-btn-normal layui-btn-mini layui-btn-disabled'"
+                                       th:classappend="${role.status}==1 ? 'layui-btn layui-btn-normal layui-btn-mini' : 'layui-btn layui-btn-normal layui-btn-mini layui-btn-disabled'"
                                 ></span></td>
                             <td class="td-manage">
                                 <a onclick="member_stop(this)" th:rel="${role.role_id}" href="javascript:;"  th:title="${role.status}==1?'启用':'停用'">
@@ -165,7 +165,7 @@
     function roleEdit(role_id){
         alert(role_id);
         xadmin.open('编辑','/roleById?role_id='+role_id+'',800,500);
- ;   }
+        ;   }
 
     /*用户-删除*/
     function member_del(obj){

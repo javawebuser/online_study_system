@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface role_permissionDao {
     int insertRolePermission (List<Role_permission> list);
+
+    int deletPermission(Integer role_id);
 }

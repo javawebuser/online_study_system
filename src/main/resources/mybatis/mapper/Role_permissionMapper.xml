@@ -13,4 +13,8 @@
             )
         </foreach>
     </insert>
+
+    <delete id="deletPermission" parameterType="int">
+        delete from role_permission where role_id=#{role_id}
+    </delete>
 </mapper>

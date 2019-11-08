@@ -17,12 +17,16 @@
     </select>
 
     <select id="selectRoleById" parameterType="int" resultMap="Role">
-        select * from role,permission,role_permission where role.role_id=role_permission.role_id and permission.per_id=role_permission.per_id and role_id=#{role_id}
+        select * from role,permission,role_permission where role.role_id=role_permission.role_id and permission.per_id=role_permission.per_id and role.role_id=#{role_id}
     </select>
 
     <insert id="insetRole" parameterType="com.cqgcxy.online_study_system.entity.Role" useGeneratedKeys="true" keyProperty="role_id">
         insert into role (role_name,status) values (#{role_name},0)
     </insert>
+
+    <update id="updateRolrAdmin" parameterType="com.cqgcxy.online_study_system.entity.Role">
+        update role set role_name=#{role_name} where role_id=#{role_id}
+    </update>
 
     <update id="updateRolrStatusRun" parameterType="int">
         update role set status=1 where role_id=#{role_id}

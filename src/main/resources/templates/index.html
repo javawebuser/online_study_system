@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>在线学习系统后台管理</title>
-    <link  href="css/font.css" th:href="@{/css/font.css}" rel="stylesheet">
-    <link  href="css/xadmin.css" th:href="@{/css/xadmin.css}" rel="stylesheet">
-    <script src="lib/layui/layui.js" charset="utf-8" th:src="@{/lib/layui/layui.js}"></script>
-    <script type="text/javascript" src="js/xadmin.js" th:src="@{/js/xadmin.js}"></script>
-    <script type="text/javascript" src="js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+    <link  href="css/font.css" th:href="@{/static/css/font.css}" rel="stylesheet">
+    <link  href="css/xadmin.css" th:href="@{/static/css/xadmin.css}" rel="stylesheet">
+    <script src="lib/layui/layui.js" charset="utf-8" th:src="@{/static/lib/layui/layui.js}"></script>
+    <script type="text/javascript" src="js/xadmin.js" th:src="@{/static/js/xadmin.js}"></script>
+    <script type="text/javascript" src="js/jquery.min.js" th:src="@{/static/js/jquery.min.js}"></script>
     <script>
         $(function(){
             $("#exit").click(function(){
@@ -65,7 +65,7 @@
                             <cite>管理员列表</cite></a>
                     </li>
                     <li>
-                        <a onclick="xadmin.add_tab('角色管理','/role')">
+                        <a onclick="xadmin.add_tab('角色管理','/roleList')">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>角色管理</cite></a>
                     </li>

@@ -13,6 +13,10 @@ public class permissionService {
     @Autowired
     permissionDao permissionDao;
 
+    /**
+     * 权限列表
+     * @return
+     */
     public List<Permission> selectPermission(){
         return permissionDao.selectPermission();
     };
