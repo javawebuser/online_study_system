@@ -21,12 +21,20 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Map;
 
 @Controller
 public class userController {
 
+    @Autowired
+    userService userService;
 
-
-
+    //查询所有管理员
+    @RequestMapping("/adminUserList")
+    public String adminUserList(Model model){
+        List<User> userList = userService.selectUserRoleAll();
+        model.addAttribute("userList",userList);
+        return "/management/user/userList";
+    }
 }

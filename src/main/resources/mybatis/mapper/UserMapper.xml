@@ -23,6 +23,16 @@
         where user.role_id=role.role_id and role.role_id=role_permission.role_id and role_permission.per_id=permission.per_id and
         user.username=#{username} and user.password=#{password}
     </select>
+    <select id="selectUserRoleAll"  resultMap="User">
+        select user.user_id,user.username,role.role_name,permission.per_id,permission.per_name,role.role_id
+        from user,role,role_permission,permission
+        where user.role_id=role.role_id and role.role_id=role_permission.role_id and role_permission.per_id=permission.per_id
+    </select>
+    <select id="selectUserIsStu" parameterType="com.cqgcxy.online_study_system.entity.User" resultMap="User">
+        select *
+        from user,role
+        where user.role_id=role.role_id and user.username=#{username} and user.password=#{password}
+    </select>
     <select id="selectUserByName" parameterType="String" resultType="com.cqgcxy.online_study_system.entity.User">
         select * from user where username=#{username}
     </select>

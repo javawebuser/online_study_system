@@ -47,29 +47,31 @@
                             <th>操作</th></tr>
                         </thead>
                         <tbody>
-                        <tr th:each="role:${role}">
-                            <td>
-                                <input type="checkbox" name="id" value="1"   lay-skin="primary">
-                            </td>
-                            <td th:text="${role.role_id}"></td>
-                            <td th:text="${role.role_name}"></td>
-                            <td>
-                                <div th:each="permissions:${role.permissions}">
-                                    <p th:text="${permissions.per_name}"></p>
-                                </div>
-                            </td>
-                            <td class="td-status">
-                                <span  th:text="${role.status}==1?'已启用':'已停用'"
-                                       th:classappend="${role.status}==1 ? 'layui-btn layui-btn-normal layui-btn-mini' : 'layui-btn layui-btn-normal layui-btn-mini layui-btn-disabled'"
-                                ></span></td>
-                            <td class="td-manage">
-                                <a onclick="member_stop(this)" th:rel="${role.role_id}" href="javascript:;"  th:title="${role.status}==1?'启用':'停用'">
-                                    <i class="layui-icon">&#xe601;</i>
-                                </a>
-                                <a title="编辑"  th:onclick="'roleEdit('+${role.role_id}+')'" href="javascript:;">
-                                    <i class="layui-icon">&#xe642;</i>
-                            </td>
-                        </tr>
+
+<!--                        <tr th:each="role:${role}">-->
+<!--                            <td>-->
+<!--                                <input type="checkbox" name="id" value="1"   lay-skin="primary">-->
+<!--                            </td>-->
+<!--                            <td th:text="${role.role_id}"></td>-->
+<!--                            <td th:text="${role.role_name}"></td>-->
+<!--                            <td>-->
+<!--                                <div th:each="permissions:${role.permissions}">-->
+<!--                                    <p th:text="${permissions.per_name}"></p>-->
+<!--                                </div>-->
+<!--                            </td>-->
+<!--                            <td class="td-status">-->
+<!--                                <span  th:text="${role.status}==1?'已启用':'已停用'"-->
+<!--                                       th:classappend="${role.status}==1 ? 'layui-btn layui-btn-normal layui-btn-mini' : 'layui-btn layui-btn-normal layui-btn-mini layui-btn-disabled'"-->
+<!--                                ></span></td>-->
+<!--                            <td class="td-manage">-->
+<!--                                <a onclick="member_stop(this)" th:rel="${role.role_id}" href="javascript:;"  th:title="${role.status}==1?'启用':'停用'">-->
+<!--                                    <i class="layui-icon">&#xe601;</i>-->
+<!--                                </a>-->
+<!--                                <a title="编辑"  th:onclick="'roleEdit('+${role.role_id}+')'" href="javascript:;">-->
+<!--                                    <i class="layui-icon">&#xe642;</i>-->
+<!--                            </td>-->
+<!--                        </tr>-->
+
                         </tbody>
                     </table>
                 </div>

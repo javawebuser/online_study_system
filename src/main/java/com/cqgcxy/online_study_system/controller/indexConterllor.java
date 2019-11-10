@@ -58,19 +58,20 @@ public class indexConterllor {
         /**
          * 使用Shiro编写认证操作
          */
-        System.out.println(username+":"+password);
         //1.获取Subject
         Subject subject = SecurityUtils.getSubject();
         //2.封装用户数据
         UsernamePasswordToken token = new UsernamePasswordToken(username,password);
         //3.执行登录方法
         HttpSession session=request.getSession();
+
         try {
             subject.login(token);
-            User user=(User)subject.getPrincipal();
-            User user1 = userService.selectUserRole(user);
+            User user=new User();
+            user.setUsername(username);
+            user.setPassword(password);
+            User user1 = userService.selectUserIsStu(user);
             session.setAttribute("user",user1);
-            //登录成功
             if (user1.getRole().getRole_name().equals("学生")){
                 return "redirect:/studentIndex";
             }else {
