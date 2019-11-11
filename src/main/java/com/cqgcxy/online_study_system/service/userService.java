@@ -31,4 +31,18 @@ public class userService {
     public User selectUserRole(User user){
         return userDao.selectUserRole(user);
     };
+
+    //新增管理用户
+    public int insertAdminUser(User user){
+        return userDao.insertAdminUser(user);
+    };
+
+    //启用或者关闭用户
+    public int updateUserStatusRunStop(int user_id,int status){
+        if (status==0){
+            return userDao.updateUserRun(user_id);
+        }else {
+            return userDao.updateUserStop(user_id);
+        }
+    }
 }

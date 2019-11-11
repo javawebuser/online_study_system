@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>角色管理</title>
+    <title>用户管理</title>
     <link href="static/css/font.css" th:href="@{/static/css/font.css}" rel="stylesheet">
     <link href="static/css/xadmin.css" th:href="@{/static/css/xadmin.css}" rel="stylesheet">
     <script src="static/lib/layui/layui.js" charset="utf-8" th:src="@{/static/lib/layui/layui.js}"></script>
@@ -31,7 +31,7 @@
                 </div>
                 <div class="layui-card-header">
                     <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-                    <button class="layui-btn" onclick="xadmin.open('添加角色','/roleAdd',800,500)"><i class="layui-icon"></i>添加角色</button>
+                    <button class="layui-btn" onclick="xadmin.open('添加用户','/adminUserAdd',800,500)"><i class="layui-icon"></i>添加角色</button>
                 </div>
                 <div class="layui-card-body layui-table-body layui-table-main">
                     <table class="layui-table layui-form">
@@ -41,6 +41,7 @@
                                 <input type="checkbox" lay-filter="checkall" name="" lay-skin="primary">
                             </th>
                             <th>ID</th>
+                            <th>用户名</th>
                             <th>角色名字</th>
                             <th>拥有权限</th>
                             <th>状态</th>
@@ -48,44 +49,33 @@
                         </thead>
                         <tbody>
 
-<!--                        <tr th:each="role:${role}">-->
-<!--                            <td>-->
-<!--                                <input type="checkbox" name="id" value="1"   lay-skin="primary">-->
-<!--                            </td>-->
-<!--                            <td th:text="${role.role_id}"></td>-->
-<!--                            <td th:text="${role.role_name}"></td>-->
-<!--                            <td>-->
-<!--                                <div th:each="permissions:${role.permissions}">-->
-<!--                                    <p th:text="${permissions.per_name}"></p>-->
-<!--                                </div>-->
-<!--                            </td>-->
-<!--                            <td class="td-status">-->
-<!--                                <span  th:text="${role.status}==1?'已启用':'已停用'"-->
-<!--                                       th:classappend="${role.status}==1 ? 'layui-btn layui-btn-normal layui-btn-mini' : 'layui-btn layui-btn-normal layui-btn-mini layui-btn-disabled'"-->
-<!--                                ></span></td>-->
-<!--                            <td class="td-manage">-->
-<!--                                <a onclick="member_stop(this)" th:rel="${role.role_id}" href="javascript:;"  th:title="${role.status}==1?'启用':'停用'">-->
-<!--                                    <i class="layui-icon">&#xe601;</i>-->
-<!--                                </a>-->
-<!--                                <a title="编辑"  th:onclick="'roleEdit('+${role.role_id}+')'" href="javascript:;">-->
-<!--                                    <i class="layui-icon">&#xe642;</i>-->
-<!--                            </td>-->
-<!--                        </tr>-->
+                        <tr th:each="user:${userList}">
+                            <td>
+                                <input type="checkbox" name="id" value="1"   lay-skin="primary">
+                            </td>
+                            <td th:text="${user.user_id}"></td>
+                            <td th:text="${user.username}"></td>
+                            <td th:text="${user.getRole().getRole_name()}"></td>
+                            <td>
+                                <div th:each="permissions:${user.getPermission()}">
+                                    <p th:text="${permissions.per_name}"></p>
+                                </div>
+                            </td>
+                            <td class="td-status">
+                                <span  th:text="${user.status}==1?'已启用':'已停用'"
+                                       th:classappend="${user.status}==1 ? 'layui-btn layui-btn-normal layui-btn-mini' : 'layui-btn layui-btn-normal layui-btn-mini layui-btn-disabled'"
+                                ></span></td>
+                            <td class="td-manage">
+                                <a onclick="member_stop(this)" th:rel="${user.user_id}" href="javascript:;"  th:title="${user.status}==1?'启用':'停用'">
+                                    <i class="layui-icon">&#xe601;</i>
+                                </a>
+                                <a title="编辑" th:rel="${user.user_id}" th:onclick="'roleEdit('+${user.user_id}+')'" href="javascript:;">
+                                    <i class="layui-icon">&#xe642;</i>
+                            </td>
+                        </tr>
 
                         </tbody>
                     </table>
-                </div>
-                <div class="layui-card-body ">
-                    <div class="page">
-                        <div>
-                            <a class="prev" href="">&lt;&lt;</a>
-                            <a class="num" href="">1</a>
-                            <span class="current">2</span>
-                            <a class="num" href="">3</a>
-                            <a class="num" href="">489</a>
-                            <a class="next" href="">&gt;&gt;</a>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -132,8 +122,8 @@
         layer.confirm(msg,function(index){
 
             if($(obj).attr('title')=='启用'){
-                var url = "/updateRolrStatusRunStop";
-                var param = {role_id:obj.rel,status:"1"};//表单序列化传递到后台
+                var url = "/updateUserRunStop";
+                var param = {user_id:obj.rel,status:"1"};//表单序列化传递到后台
                 $.post(url, param, function(data) {
                     if(data.flag==1){
                         $(obj).attr('title','停用')
@@ -146,8 +136,8 @@
                     }
                 });
             }else{
-                var url = "/updateRolrStatusRunStop";
-                var param = {role_id:obj.rel,status:"0"};//表单序列化传递到后台
+                var url = "/updateUserRunStop";
+                var param = {user_id:obj.rel,status:"0"};//表单序列化传递到后台
                 $.post(url, param, function(data) {
                     if(data.flag==1){
                         $(obj).attr('title','启用')

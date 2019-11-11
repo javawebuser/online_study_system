@@ -9,4 +9,7 @@ public interface userDao {
     User selectUserByName(String username);
     User selectUserRole(User user);
     User selectUserIsStu(User user);
+    int insertAdminUser(User user);
+    int updateUserRun(int user_id);
+    int updateUserStop(int user_id);
 }

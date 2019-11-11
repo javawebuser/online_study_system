@@ -8,6 +8,7 @@
     <result property="username" column="username"></result>
     <result property="password" column="password"></result>
     <result property="role_id" column="role_id"></result>
+    <result property="status" column="status"></result>
     <association property="role" javaType="com.cqgcxy.online_study_system.entity.Role">
         <id property="role_id" column="role_id"></id>
         <result property="role_name" column="role_name"></result>
@@ -18,15 +19,15 @@
     </collection>
     </resultMap>
     <select id="selectUserRole" parameterType="com.cqgcxy.online_study_system.entity.User" resultMap="User">
-        select user.user_id,user.username,role.role_name,permission.per_id,permission.per_name,role.role_id
+        select user.user_id,user.username,role.role_name,permission.per_id,permission.per_name,role.role_id,user.status
         from user,role,role_permission,permission
         where user.role_id=role.role_id and role.role_id=role_permission.role_id and role_permission.per_id=permission.per_id and
         user.username=#{username} and user.password=#{password}
     </select>
     <select id="selectUserRoleAll"  resultMap="User">
-        select user.user_id,user.username,role.role_name,permission.per_id,permission.per_name,role.role_id
+        select user.user_id,user.username,role.role_name,permission.per_id,permission.per_name,role.role_id,user.status
         from user,role,role_permission,permission
-        where user.role_id=role.role_id and role.role_id=role_permission.role_id and role_permission.per_id=permission.per_id
+        where user.role_id=role.role_id and role.role_id=role_permission.role_id and role_permission.per_id=permission.per_id and role_name!='管理员'
     </select>
     <select id="selectUserIsStu" parameterType="com.cqgcxy.online_study_system.entity.User" resultMap="User">
         select *
@@ -36,4 +37,15 @@
     <select id="selectUserByName" parameterType="String" resultType="com.cqgcxy.online_study_system.entity.User">
         select * from user where username=#{username}
     </select>
+    <update id="updateUserRun" parameterType="int">
+        update user set status=1 where user_id=#{user_id}
+    </update>
+
+    <update id="updateUserStop" parameterType="int">
+        update user set status=0 where user_id=#{user_id}
+    </update>
+
+    <insert id="insertAdminUser" parameterType="com.cqgcxy.online_study_system.entity.User">
+        insert into user (username,password,role_id,status) value (#{username},'1234560',#{role_id},1)
+    </insert>
 </mapper>

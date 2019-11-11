@@ -46,7 +46,6 @@
             //监听提交
             form.on('submit(add)',
                 function(data) {
-                    var ids = add();
                     var url = "/roleAdd_submit";
                     var param = {role_name:data.field.role_name,per:ids};//表单序列化传递到后台
                     $.post(url, param, function(data) {
@@ -60,17 +59,7 @@
                     return false;
                 });
         });
-        function add(argument) {
-            var ids = [];
 
-            // 获取选中的id
-            $('input').each(function(index, el) {
-                if($(this).prop('checked')){
-                    ids.push($(this).val())
-                }
-            });
-            return ids.toString();
-        }
     </script>
     </body>
 </html>

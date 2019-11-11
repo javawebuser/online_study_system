@@ -21,7 +21,7 @@
     </select>
 
     <insert id="insetRole" parameterType="com.cqgcxy.online_study_system.entity.Role" useGeneratedKeys="true" keyProperty="role_id">
-        insert into role (role_name,status) values (#{role_name},0)
+        insert into role (role_name,status) values (#{role_name},1)
     </insert>
 
     <update id="updateRolrAdmin" parameterType="com.cqgcxy.online_study_system.entity.Role">

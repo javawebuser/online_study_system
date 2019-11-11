@@ -13,8 +13,17 @@ public class User {
     private String username;//用户名
     private String password;//用户密码
     private Integer role_id;//角色id
+    private int status;//用户状态
     private Role role;
     private List<Permission> permission;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public Role getRole() {
         return role;

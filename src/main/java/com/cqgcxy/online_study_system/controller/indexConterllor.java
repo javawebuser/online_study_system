@@ -71,11 +71,17 @@ public class indexConterllor {
             user.setUsername(username);
             user.setPassword(password);
             User user1 = userService.selectUserIsStu(user);
-            session.setAttribute("user",user1);
             if (user1.getRole().getRole_name().equals("学生")){
+                session.setAttribute("user",user1);
                 return "redirect:/studentIndex";
             }else {
-                return "redirect:/index";
+                if (user1.getStatus()==1){
+                    session.setAttribute("user",user1);
+                    return "redirect:/index";
+                }else {
+                    model.addAttribute("msg","用户已停用");
+                    return "login";
+                }
             }
         } catch (UnknownAccountException e) {
             //登录失败
