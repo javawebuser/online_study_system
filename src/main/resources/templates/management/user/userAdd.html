@@ -14,27 +14,29 @@
     <div class="layui-row">
         <form class="layui-form">
             <div class="layui-form-item">
-                <label for="role_name" class="layui-form-label">
+                <label for="username" class="layui-form-label">
                     <span class="x-red">*</span>用户名
                 </label>
                 <div class="layui-input-inline">
-                    <input type="text" id="role_name" name="role_name" required="" lay-verify="required"
+                    <input type="text" id="username" name="username" required="" lay-verify="required"
                            autocomplete="off" class="layui-input">
                 </div>
             </div>
+
             <div class="layui-form-item">
-                <label class="layui-form-label"><span class="x-red">*</span>角色权限</label>
-                <div class="layui-input-block">
-                    <div th:each="role:${roleList}">
-                        <input type="checkbox" name="id" th:value="${role.getRole_id()}" lay-skin="primary" th:title="${role.getRole_name()}" checked="">
-                    </div>
+                <label for="role_id" class="layui-form-label">
+                    <span class="x-red">*</span>用户角色
+                </label>
+                <div class="layui-input-inline">
+                    <select id="role_id"  name="role_id" class="valid">
+                        <option th:each="role:${roleList}" th:value="${role.getRole_id()}" th:text="${role.getRole_name()}"></option>
+                    </select>
                 </div>
             </div>
+
             <div class="layui-form-item">
-                <button  class="layui-btn" lay-filter="add" lay-submit="">
-                    增加
-                </button>
-            </div>
+                <label for="L_repass" class="layui-form-label"></label>
+                <button id="L_repass" class="layui-btn" lay-filter="add" lay-submit="">增加</button></div>
         </form>
     </div>
 </div>
@@ -46,9 +48,9 @@
         //监听提交
         form.on('submit(add)',
             function(data) {
-                var ids = add();
-                var url = "/roleAdd_submit";
-                var param = {role_name:data.field.role_name,per:ids};//表单序列化传递到后台
+                console.log(data);
+                var url = "/adminUserAdd_submit";
+                var param = {username:data.field.username,role_id:data.field.role_id};//表单序列化传递到后台
                 $.post(url, param, function(data) {
                     if (data.flag==1){
                         xadmin.close();
@@ -60,17 +62,6 @@
                 return false;
             });
     });
-function add(argument) {
-    var ids = [];
-
-    // 获取选中的id
-    $('input').each(function(index, el) {
-        if($(this).prop('checked')){
-            ids.push($(this).val())
-        }
-    });
-    return ids.toString();
-}
 </script>
 </body>
 </html>

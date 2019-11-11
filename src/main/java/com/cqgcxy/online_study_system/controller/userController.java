@@ -1,5 +1,6 @@
 package com.cqgcxy.online_study_system.controller;
 
+import com.cqgcxy.online_study_system.entity.Permission;
 import com.cqgcxy.online_study_system.entity.ResultMsg;
 import com.cqgcxy.online_study_system.entity.Role;
 import com.cqgcxy.online_study_system.entity.User;
@@ -64,9 +65,37 @@ public class userController {
         }else {
             return new ResultMsg(0,"失败");
         }
-
     }
 
+    //管理员修改页面
+    @RequestMapping("/adminUserById")
+    public ModelAndView adminUserById(@RequestParam("user_id")String user_id){
+        ModelAndView view = new ModelAndView("/management/user/userEdit");
+        User user = userService.selectAdminUserById(Integer.parseInt(user_id));
+        List<Role> roleList = roleService.selectRole();
+        view.addObject("roleList",roleList);
+        view.addObject("user",user);
+        return view;
+    }
+
+    //管理员修改
+    @ResponseBody
+    @RequestMapping("/adminUser_submit")
+    public ResultMsg adminUser_submit(
+                                    @RequestParam("user_id") String user_id,
+                                    @RequestParam("username") String username,
+                                    @RequestParam("role_id") String role_id){
+        User updateUser = new User();
+        updateUser.setUser_id(Integer.parseInt(user_id));
+        updateUser.setUsername(username);
+        updateUser.setRole_id(Integer.parseInt(role_id));
+        int i = userService.updateAdminUser(updateUser);
+        if (i==1){
+            return new ResultMsg(1,"成功");
+        }else {
+            return new ResultMsg(0, "失败");
+        }
+    }
 
     //启动或者关闭管理员用户
     @ResponseBody

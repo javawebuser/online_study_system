@@ -37,6 +37,14 @@
     <select id="selectUserByName" parameterType="String" resultType="com.cqgcxy.online_study_system.entity.User">
         select * from user where username=#{username}
     </select>
+    <select id="selectAdminUserById" parameterType="int" resultMap="User">
+        select *
+        from user,role
+        where user.role_id=role.role_id and user.user_id=#{user_id}
+    </select>
+    <update id="updateAdminUser" parameterType="com.cqgcxy.online_study_system.entity.User">
+        update user set username=#{username},role_id=#{role_id} where user_id=#{user_id}
+    </update>
     <update id="updateUserRun" parameterType="int">
         update user set status=1 where user_id=#{user_id}
     </update>

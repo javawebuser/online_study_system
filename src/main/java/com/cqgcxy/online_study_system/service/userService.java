@@ -32,11 +32,20 @@ public class userService {
         return userDao.selectUserRole(user);
     };
 
+    //根据用户id查询用户
+    public User selectAdminUserById(int user_id){
+        return userDao.selectAdminUserById(user_id);
+    };
+
     //新增管理用户
     public int insertAdminUser(User user){
         return userDao.insertAdminUser(user);
     };
 
+    //修改用户
+    public int updateAdminUser(User user){
+        return  userDao.updateAdminUser(user);
+    };
     //启用或者关闭用户
     public int updateUserStatusRunStop(int user_id,int status){
         if (status==0){
