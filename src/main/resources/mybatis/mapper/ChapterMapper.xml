@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cqgcxy.online_study_system.dao.chapterDao">
+    <select id="selectChapter" resultType="com.cqgcxy.online_study_system.entity.Chapter">
+        select * from chapter
+    </select>
+
+    <insert id="insertChapter" parameterType="com.cqgcxy.online_study_system.entity.Chapter">
+        insert into chapter(chapter,co_id)
+        value(#{chapter},#{co_id})
+    </insert>
+</mapper>
