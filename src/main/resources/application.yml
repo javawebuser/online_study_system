@@ -14,6 +14,10 @@ spring:
     static-path-pattern: /**
   resources:
     static-locations: classpath:/static/
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 50MB
 mybatis:
   config-location: classpath:mybatis/mybatis-config.xml #指定全局配置文件的位置
   mapper-locations: classpath:mybatis/mapper/*.xml  #指定sql映射文件的位置

@@ -1,10 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>课件添加</title>
+    <link href="static/css/font.css" th:href="@{/static/css/font.css}" rel="stylesheet">
+    <link href="static/css/xadmin.css" th:href="@{/static/css/xadmin.css}" rel="stylesheet">
+    <script src="static/lib/layui/layui.js" charset="utf-8" th:src="@{/static/lib/layui/layui.js}"></script>
+    <script type="text/javascript" src="static/js/xadmin.js" th:src="@{/static/js/xadmin.js}"></script>
+    <script type="text/javascript" src="static/js/jquery.min.js" th:src="@{/static/js/jquery.min.js}"></script>
 </head>
 <body>
+<div class="layui-fluid">
+    <div class="layui-row">
+        <form class="layui-form">
+            <input type="hidden" id="co_id" name="co_id" th:value="${chapter_id}">
+                <div class="layui-card">
+                    <label class="layui-form-label">文件类型</label>
+                    <div class="layui-input-block">
+                        <select name="interest" lay-filter="aihao">
+                            <option value="1">文件</option>
+                            <option value="2">视频</option>
+                        </select>
+                    </div>
+                    <div class="layui-card-body">
+                        <button type="button" class="layui-btn layui-btn-normal" id="test-upload-change">选择文件</button>
+                        <button type="button" class="layui-btn" id="test-upload-change-action">开始上传</button><button id="L_repass" class="layui-btn" lay-filter="add" lay-submit="">增加</button>
+                    </div>
+                </div>
+        </form>
+    </div>
+</div>
+<script>layui.use(['form', 'layer','upload'],
+    function() {
+        $ = layui.jquery;
+        var form = layui.form,
+            layer = layui.layer,
+            upload = layui.upload;
+        //监听提交
+        form.on('submit(add)',
+            function(data) {
+                var url = "/chapterAdd_submit";
+                var param = {co_id:data.field.co_id,chapter:data.field.chapter};//表单序列化传递到后台
+                $.post(url, param, function(data) {
+                    if (data.flag==1){
+                        xadmin.close();
+                        xadmin.father_reload();
+                    }else {
+                        layer.msg('增加失败!',{icon: 5,time:1000});
+                    }
+                });
+                return false;
+            });
+        //选完文件后不自动上传
+        upload.render({
+            elem: '#test-upload-change'
+            ,url: '/upload/'
+            ,auto: false
+            ,accept: 'file'
+            //,multiple: true
+            ,bindAction: '#test-upload-change-action'
+            ,done: function(res){
+                console.log(res)
+            }
+        });
 
+    });
+</script>
 </body>
 </html>
