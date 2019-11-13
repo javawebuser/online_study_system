@@ -13,18 +13,21 @@
 <div class="layui-fluid">
     <div class="layui-row">
         <form class="layui-form">
-            <input type="hidden" id="co_id" name="co_id" th:value="${chapter_id}">
+            <input type="hidden" id="chapter_id" name="chapter_id" th:value="${chapter_id}">
+
                 <div class="layui-card">
                     <label class="layui-form-label">文件类型</label>
                     <div class="layui-input-block">
-                        <select name="interest" lay-filter="aihao">
+                        <select name="type" lay-filter="aihao">
                             <option value="1">文件</option>
                             <option value="2">视频</option>
                         </select>
                     </div>
                     <div class="layui-card-body">
                         <button type="button" class="layui-btn layui-btn-normal" id="test-upload-change">选择文件</button>
-                        <button type="button" class="layui-btn" id="test-upload-change-action">开始上传</button><button id="L_repass" class="layui-btn" lay-filter="add" lay-submit="">增加</button>
+                        <input type="hidden" id="address" name="address">
+                        <button type="button" class="layui-btn" id="test-upload-change-action">开始上传</button>
+                        <button id="L_repass" class="layui-btn" lay-filter="add" lay-submit="">增加</button>
                     </div>
                 </div>
         </form>
@@ -39,8 +42,8 @@
         //监听提交
         form.on('submit(add)',
             function(data) {
-                var url = "/chapterAdd_submit";
-                var param = {co_id:data.field.co_id,chapter:data.field.chapter};//表单序列化传递到后台
+                var url = "/coursewareAdd_submit";
+                var param = {chapter_id:data.field.chapter_id,type:data.field.type,address:data.field.address};//表单序列化传递到后台
                 $.post(url, param, function(data) {
                     if (data.flag==1){
                         xadmin.close();
@@ -60,7 +63,8 @@
             //,multiple: true
             ,bindAction: '#test-upload-change-action'
             ,done: function(res){
-                console.log(res)
+                layer.msg('上传成功!',{icon: 1,time:1000});
+                $("input[name=address]").val(res.path);
             }
         });
 

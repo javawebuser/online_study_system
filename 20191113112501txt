@@ -1,0 +1,30 @@
+查询所有成绩
+select cl.class_name,course.course,teacher_info.te_truename,stu_assess.as_id,scoresum,stusum,average from 
+course,(select class_info.class_name,class_info.cl_id,count(*) as stusum from class_info,student_info where class_info.cl_id=student_info.stu_cl_id group by class_info.cl_id) as cl,teacher_info,stu_assess,(select as_id,avg(score)as average,count(*) as scoresum from stu_score group by as_id) as score 
+where 
+course.co_id=stu_assess.as_co_id and 
+stu_assess.as_cl_id=cl.cl_id and 
+teacher_info.te_id=stu_assess.as_te_id and 
+stu_assess.as_id=score.as_id 
+order by average desc
+查询指标细名表
+select * from stu_poll where as_id=6
+查询
+
+查询最大值
+select max(score) from stu_score where as_id=6
+查询最小值
+select min(score) from stu_score where as_id=6
+
+查询未评教的老师
+select * from teacher_info where teacher_info.te_id not in (
+select te_score.te_id from te_score where te_score.tea_te_id=1
+) and teacher_info.te_id!=1
+查询评价老师给我的评教
+select avg(score) as score from te_score where te_score.te_id=6
+查询我给其他老师的评教
+select * from teacher_info,te_score where teacher_info.te_id  in (
+select te_score.te_id from te_score where te_score.tea_te_id=1
+)
+and te_score.tea_te_id = 1
+and te_score.te_id=teacher_info.te_id

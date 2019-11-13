@@ -1,6 +1,7 @@
 package com.cqgcxy.online_study_system.controller;
 
 import com.cqgcxy.online_study_system.entity.Chapter;
+import com.cqgcxy.online_study_system.entity.CourseWare;
 import com.cqgcxy.online_study_system.entity.ResultMsg;
 import com.cqgcxy.online_study_system.service.chapterService;
 import com.cqgcxy.online_study_system.service.coursewareService;
@@ -32,12 +33,18 @@ public class coursewareController {
 
     @ResponseBody
     @RequestMapping("/coursewareAdd_submit")
-    public ResultMsg coursewareAdd_submit(@RequestParam("chapter_id") String co_id,
-                                       @RequestParam("chapter") String chapter
-                                        ){
-
-
-        return new ResultMsg(0, "失败");
-
+    public ResultMsg coursewareAdd_submit(
+                                            @RequestParam("chapter_id") String chapter_id,
+                                            @RequestParam("type") String type,
+                                            @RequestParam("address") String address
+                                         ){
+        CourseWare courseWare = new CourseWare();
+        courseWare.setChapter_id(Integer.parseInt(chapter_id));courseWare.setType(type);courseWare.setAddress(address);
+        int i= coursewareService.insertCourseWare(courseWare);
+        if (i==1){
+            return new ResultMsg(1,"成功");
+        }else {
+            return new ResultMsg(0, "失败");
+        }
     }
 }
