@@ -35,11 +35,10 @@ public class coursewareController {
     @RequestMapping("/coursewareAdd_submit")
     public ResultMsg coursewareAdd_submit(
                                             @RequestParam("chapter_id") String chapter_id,
-                                            @RequestParam("type") String type,
                                             @RequestParam("address") String address
                                          ){
         CourseWare courseWare = new CourseWare();
-        courseWare.setChapter_id(Integer.parseInt(chapter_id));courseWare.setType(type);courseWare.setAddress(address);
+        courseWare.setChapter_id(Integer.parseInt(chapter_id));courseWare.setAddress(address);
         int i= coursewareService.insertCourseWare(courseWare);
         if (i==1){
             return new ResultMsg(1,"成功");

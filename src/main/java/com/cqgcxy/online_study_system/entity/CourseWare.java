@@ -9,7 +9,6 @@ public class CourseWare {
 
     private Integer Id;//id
     private Integer chapter_id;//章节id
-    private String type;//课件类型
     private String address;//课件地址
 
     public Integer getId() {
@@ -26,14 +25,6 @@ public class CourseWare {
 
     public void setChapter_id(Integer chapter_id) {
         this.chapter_id = chapter_id;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getAddress() {

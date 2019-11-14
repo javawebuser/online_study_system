@@ -16,13 +16,6 @@
             <input type="hidden" id="chapter_id" name="chapter_id" th:value="${chapter_id}">
 
                 <div class="layui-card">
-                    <label class="layui-form-label">文件类型</label>
-                    <div class="layui-input-block">
-                        <select name="type" lay-filter="aihao">
-                            <option value="1">文件</option>
-                            <option value="2">视频</option>
-                        </select>
-                    </div>
                     <div class="layui-card-body">
                         <button type="button" class="layui-btn layui-btn-normal" id="test-upload-change">选择文件</button>
                         <input type="hidden" id="address" name="address">
@@ -43,7 +36,7 @@
         form.on('submit(add)',
             function(data) {
                 var url = "/coursewareAdd_submit";
-                var param = {chapter_id:data.field.chapter_id,type:data.field.type,address:data.field.address};//表单序列化传递到后台
+                var param = {chapter_id:data.field.chapter_id,address:data.field.address};//表单序列化传递到后台
                 $.post(url, param, function(data) {
                     if (data.flag==1){
                         xadmin.close();

@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <title>课程列表</title>
-    <link href="static/css/font.css" th:href="@{/static/css/font.css}" rel="stylesheet">
-    <link href="static/css/xadmin.css" th:href="@{/static/css/xadmin.css}" rel="stylesheet">
-    <script src="static/lib/layui/layui.js" charset="utf-8" th:src="@{/static/lib/layui/layui.js}"></script>
-    <script type="text/javascript" src="static/js/xadmin.js" th:src="@{/static/js/xadmin.js}"></script>
-    <script type="text/javascript" src="static/js/jquery.min.js" th:src="@{/static/js/jquery.min.js}"></script>
+    <link href="static/css/font.css" th:href="@{./static/css/font.css}" rel="stylesheet">
+    <link href="static/css/xadmin.css" th:href="@{./static/css/xadmin.css}" rel="stylesheet">
+    <script src="static/lib/layui/layui.js" charset="utf-8" th:src="@{./static/lib/layui/layui.js}"></script>
+    <script type="text/javascript" src="static/js/xadmin.js" th:src="@{./static/js/xadmin.js}"></script>
+    <script type="text/javascript" src="static/js/jquery.min.js" th:src="@{./static/js/jquery.min.js}"></script>
 </head>
 
 <body>
@@ -78,7 +78,9 @@
                         </tr>
                         <tr th:each="courseWare:${courseWares}" th:case-id="${courseWare.Id}" th:fid="${courseWare.chapter_id}">
                             <td colspan="5" style="padding-left:26%">
-                                [[${courseWare.address}]]
+                                <video width="320" height="240" controls autoplay >
+                                    <source th:src="@{./upload/{address}(address=${courseWare.address})}" type="video/mp4">
+                                </video>
                             </td>
                             <td class="td-manage">
                                 <button class="layui-btn layui-btn layui-btn-xs"  onclick="xadmin.open('编辑','admin-edit.html')" ><i class="layui-icon">&#xe642;</i>编辑</button>

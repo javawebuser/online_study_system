@@ -52,14 +52,14 @@
         form.on('submit(add)',
             function(data) {
                 console.log(data);
-                var url = "/adminUserAdd_submit";
-                var param = {user_id:data.field.username.user_id,username:data.field.username,role_id:data.field.role_id};//表单序列化传递到后台
+                var url = "/adminUser_submit";
+                var param = {user_id:data.field.user_id,username:data.field.username,role_id:data.field.role_id};//表单序列化传递到后台
                 $.post(url, param, function(data) {
                     if (data.flag==1){
                         xadmin.close();
                         xadmin.father_reload();
                     }else {
-                        layer.msg('增加失败!',{icon: 5,time:1000});
+                        layer.msg('修改失败!',{icon: 5,time:1000});
                     }
                 });
                 return false;

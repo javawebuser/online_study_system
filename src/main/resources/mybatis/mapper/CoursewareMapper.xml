@@ -7,6 +7,6 @@
         select * from courseware
     </select>
     <insert id="insertCourseWare" parameterType="com.cqgcxy.online_study_system.entity.CourseWare">
-        insert into courseware (chapter_id,type,address) value (#{chapter_id},#{type},#{address})
+        insert into courseware (chapter_id,address) value (#{chapter_id},#{address})
     </insert>
 </mapper>

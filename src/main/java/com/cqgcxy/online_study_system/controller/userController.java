@@ -109,4 +109,58 @@ public class userController {
             return new ResultMsg(0,"false");
         }
     }
+
+    //查询所有学生
+    @RequestMapping("/stuUserList")
+    public String stuUserList(Model model){
+        List<User> userList = userService.selectStuUser();
+        model.addAttribute("userList",userList);
+        return "/management/student/studentList";
+    }
+    //学生增加页面
+    @RequestMapping("/stuUserAdd")
+    public String stuUserAdd(){
+        return "/management/student/studentAdd";
+    }
+
+    //学生添加提交
+    @ResponseBody
+    @RequestMapping("/stuUserAdd_submit")
+    public ResultMsg stuUserAdd_submit(@RequestParam("username") String username){
+        User user = new User();
+        user.setUsername(username);
+        int i = userService.insertstuUser(user);
+        if (i==1){
+            return new ResultMsg(1,"成功");
+        }else {
+            return new ResultMsg(0,"失败");
+        }
+    }
+
+    //学生修改页面
+    @RequestMapping("/stuUserById")
+    public ModelAndView stuUserById(@RequestParam("user_id")String user_id){
+        ModelAndView view = new ModelAndView("/management/student/studentEdit");
+        User user = userService.selectAdminUserById(Integer.parseInt(user_id));
+        view.addObject("user",user);
+        return view;
+    }
+
+    //学生修改
+    @ResponseBody
+    @RequestMapping("/stuUser_submit")
+    public ResultMsg stuUser_submit(
+            @RequestParam("user_id") String user_id,
+            @RequestParam("username") String username){
+        User updateUser = new User();
+        updateUser.setUser_id(Integer.parseInt(user_id));
+        updateUser.setUsername(username);
+        updateUser.setRole_id(3);
+        int i = userService.updateAdminUser(updateUser);
+        if (i==1){
+            return new ResultMsg(1,"成功");
+        }else {
+            return new ResultMsg(0, "失败");
+        }
+    }
 }

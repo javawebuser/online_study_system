@@ -25,7 +25,8 @@ public class uploadConterllor {
             return path;
         }
         //创建本地文件
-        String classpath = ResourceUtils.getURL("classpath:").getPath();
+        String classpath = "/D:/IdeaProjects/online_study_system/src/main/resources";
+        System.out.println(classpath);
         //创建一个日期对象
         Date d=new Date();
         System.out.println(d);

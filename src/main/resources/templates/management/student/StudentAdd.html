@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户添加</title>
+    <link href="static/css/font.css" th:href="@{/static/css/font.css}" rel="stylesheet">
+    <link href="static/css/xadmin.css" th:href="@{/static/css/xadmin.css}" rel="stylesheet">
+    <script src="static/lib/layui/layui.js" charset="utf-8" th:src="@{/static/lib/layui/layui.js}"></script>
+    <script type="text/javascript" src="static/js/xadmin.js" th:src="@{/static/js/xadmin.js}"></script>
+    <script type="text/javascript" src="static/js/jquery.min.js" th:src="@{/static/js/jquery.min.js}"></script>
+</head>
+<body>
+<div class="layui-fluid">
+    <div class="layui-row">
+        <form class="layui-form">
+            <div class="layui-form-item">
+                <label for="username" class="layui-form-label">
+                    <span class="x-red">*</span>用户名
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" id="username" name="username" required="" lay-verify="required"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label for="L_repass" class="layui-form-label"></label>
+                <button id="L_repass" class="layui-btn" lay-filter="add" lay-submit="">增加</button></div>
+        </form>
+    </div>
+</div>
+<script>layui.use(['form', 'layer'],
+    function() {
+        $ = layui.jquery;
+        var form = layui.form,
+            layer = layui.layer;
+        //监听提交
+        form.on('submit(add)',
+            function(data) {
+                console.log(data);
+                var url = "/stuUserAdd_submit";
+                var param = {username:data.field.username};//表单序列化传递到后台
+                $.post(url, param, function(data) {
+                    if (data.flag==1){
+                        xadmin.close();
+                        xadmin.father_reload();
+                    }else {
+                        layer.msg('增加失败!',{icon: 5,time:1000});
+                    }
+                });
+                return false;
+            });
+    });
+</script>
+</body>
+</html>

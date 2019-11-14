@@ -42,6 +42,9 @@
         from user,role
         where user.role_id=role.role_id and user.user_id=#{user_id}
     </select>
+    <select id="selectStuUser" resultType="com.cqgcxy.online_study_system.entity.User">
+        select * from user,role where user.role_id=role.role_id and role.role_id=3
+    </select>
     <update id="updateAdminUser" parameterType="com.cqgcxy.online_study_system.entity.User">
         update user set username=#{username},role_id=#{role_id} where user_id=#{user_id}
     </update>
@@ -55,5 +58,9 @@
 
     <insert id="insertAdminUser" parameterType="com.cqgcxy.online_study_system.entity.User">
         insert into user (username,password,role_id,status) value (#{username},'1234560',#{role_id},1)
+    </insert>
+
+    <insert id="insertstuUser" parameterType="com.cqgcxy.online_study_system.entity.User">
+        insert into user (username,password,role_id,status) value (#{username},'1234560',3,1)
     </insert>
 </mapper>

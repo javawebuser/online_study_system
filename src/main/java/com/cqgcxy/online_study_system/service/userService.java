@@ -54,4 +54,12 @@ public class userService {
             return userDao.updateUserStop(user_id);
         }
     }
+    //查询所有学生
+    public List<User> selectStuUser(){
+        return userDao.selectStuUser();
+    };
+    //添加学生
+    public int insertstuUser(User user){
+        return userDao.insertstuUser(user);
+    };
 }

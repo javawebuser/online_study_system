@@ -51,11 +51,11 @@ public class roleService {
     public int insetRole(Role role,String per []){
         //添加角色、角色添加失败返回0
         int i = roleDao.insetRole(role);
-        Role_permission permission = new Role_permission();
         List<Role_permission> list=new ArrayList<>();
         if (i==1){
             for (int j=0;j<per.length;j++){
                 //将添加角色后的role_id，写到Role_permission中
+                Role_permission permission = new Role_permission();
                 permission.setRole_id(role.getRole_id());
                 permission.setPer_id(Integer.parseInt(per[j]));
                 list.add(permission);
@@ -92,7 +92,6 @@ public class roleService {
     public int updateRolrAdmin(Role role,String per []){
         //1.修改权限名字，修改失败返会0
         int i = roleDao.updateRolrAdmin(role);
-        Role_permission permission = new Role_permission();
         List<Role_permission> list=new ArrayList<>();
         if (i==1){
             //2.删除角色所有权限，删除失败回滚事务，返回0
@@ -100,6 +99,7 @@ public class roleService {
             if (j>0){
                 for (int l=0;l<per.length;l++){
                     //将添加角色后的role_id，写到Role_permission中
+                    Role_permission permission = new Role_permission();
                     permission.setRole_id(role.getRole_id());
                     permission.setPer_id(Integer.parseInt(per[l]));
                     list.add(permission);
