@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cqgcxy.online_study_system.dao.batchDao">
+    <resultMap id="Batch" type="com.cqgcxy.online_study_system.entity.Batch">
+        <id property="batch_id" column="batch_id"></id>
+        <result property="begintime" column="begintime"></result>
+        <result property="endtime" column="endtime"></result>
+        <collection property="courses" ofType="com.cqgcxy.online_study_system.entity.Course">
+            <id property="co_id" column="co_id"></id>
+            <result property="coursetime" column="coursetime"></result>
+        </collection>
+    </resultMap>
+    <select id="selectBatch" resultMap="Batch">
+        select * from batch,batch_course,course where batch.batch_id=batch_course.batch_id and batch_course.co_id=course.co_id
+    </select>
+
+    <select id="selectBatchById" parameterMap="int" resultMap="Batch">
+        select * from batch,batch_course,course where batch.batch_id=batch_course.batch_id and batch_course.co_id=course.co_id and batch.batch_id=#{batch_id}
+    </select>
+
+    <insert id="insertBatch" parameterType="com.cqgcxy.online_study_system.entity.Batch" useGeneratedKeys="true" keyProperty="batch_id">
+        insert into batch(begintime,endtime)
+        value(#{begintime},#{endtime})
+    </insert>
+
+    <update id="updateBatch" parameterType="com.cqgcxy.online_study_system.entity.Batch">
+        update batch set begintime=#{begintime},endtime=#{endtime} where batch_id=#{batch_id}
+    </update>
+</mapper>

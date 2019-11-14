@@ -79,7 +79,7 @@
                         <tr th:each="courseWare:${courseWares}" th:case-id="${courseWare.Id}" th:fid="${courseWare.chapter_id}">
                             <td colspan="5" style="padding-left:26%">
                                 <video width="320" height="240" controls autoplay >
-                                    <source th:src="@{./upload/{address}(address=${courseWare.address})}" type="video/mp4">
+                                    <source th:src="@{/upload/{address}(address=${courseWare.address})}" type="video/mp4">
                                 </video>
                             </td>
                             <td class="td-manage">
