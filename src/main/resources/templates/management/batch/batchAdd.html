@@ -13,40 +13,76 @@
     <div class="layui-fluid">
         <div class="layui-row">
             <form class="layui-form">
-                <div class="layui-form-item">
-                    <label for="role_name" class="layui-form-label">
-                        <span class="x-red">*</span>角色名字
-                    </label>
-                    <div class="layui-input-inline">
-                        <input type="text" id="role_name" name="role_name" required="" lay-verify="required"
-                               autocomplete="off" class="layui-input">
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label"><span class="x-red">*</span>角色权限</label>
-                    <div class="layui-input-block">
-                        <div th:each="permissions:${permissions}">
-                            <input type="checkbox" name="id" th:value="${permissions.per_id}" lay-skin="primary" th:title="${permissions.per_name}" checked="">
+                <div class="layui-card-body" pad15>
+                    <div class="layui-form" wid100>
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">课程日期</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="begintime" class="layui-input" id="test-laydate-start" placeholder="开始日期">
+                                </div>
+                                <div class="layui-form-mid">
+                                    -
+                                </div>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="endtime" class="layui-input" id="test-laydate-end" placeholder="结束日期">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">选择课程</label>
+                                <div class="layui-input-block">
+                                    <div th:each="course:${courses}">
+                                        <input type="checkbox" name="id" th:value="${course.co_id}" lay-skin="primary" th:title="${course.course}" checked="">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label for="L_repass" class="layui-form-label"></label>
+                                <button id="L_repass" class="layui-btn" lay-filter="add" lay-submit="">增加</button></div>
                         </div>
                     </div>
                 </div>
-                <div class="layui-form-item">
-                    <label for="L_repass" class="layui-form-label"></label>
-                    <button id="L_repass" class="layui-btn" lay-filter="add" lay-submit="">增加</button></div>
             </form>
         </div>
     </div>
-    <script>layui.use(['form', 'layer'],
+    <script>layui.use(['form', 'layer','laydate'],
         function() {
             $ = layui.jquery;
             var form = layui.form,
-                layer = layui.layer;
+                layer = layui.layer,
+                laydate = layui.laydate;
+            //开始日期
+            var insStart = laydate.render({
+                elem: '#test-laydate-start'
+                ,min: 0
+                ,done: function(value, date){
+                    //更新结束日期的最小日期
+                    insEnd.config.min = lay.extend({}, date, {
+                        month: date.month - 1
+                    });
+                    //自动弹出结束日期的选择器
+                    insEnd.config.elem[0].focus();
+                }
+            });
+
+            //结束日期
+            var insEnd = laydate.render({
+                elem: '#test-laydate-end'
+                ,min: 0
+                ,done: function(value, date){
+                    //更新开始日期的最大日期
+                    insStart.config.max = lay.extend({}, date, {
+                        month: date.month - 1
+                    });
+                }
+            });
             //监听提交
             form.on('submit(add)',
                 function(data) {
+                    console.log(data)
                     var ids = add();
-                    var url = "/roleAdd_submit";
-                    var param = {role_name:data.field.role_name,per:ids};//表单序列化传递到后台
+                    var url = "/batchAdd_submit";
+                    var param = {begintime:data.field.begintime,endtime:data.field.endtime,per:ids};//表单序列化传递到后台
                     $.post(url, param, function(data) {
                         if (data.flag==1){
                             xadmin.close();

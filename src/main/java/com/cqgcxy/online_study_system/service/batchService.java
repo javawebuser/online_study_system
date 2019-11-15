@@ -64,7 +64,7 @@ public class batchService {
                     //将添加批次后的batch_id，写到Role_permission中
                     Batch_course course = new Batch_course();
                     course.setBatch_id(batch.getBatch_id());
-                    course.setCo_id(Integer.parseInt(per[j]));
+                    course.setCo_id(Integer.parseInt(per[l]));
                     list.add(course);
                 }
                 //判断添加条数是否正确，正确放回1，错误回滚事务，并放回0

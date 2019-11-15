@@ -2,6 +2,7 @@ package com.cqgcxy.online_study_system.controller;
 
 import com.cqgcxy.online_study_system.entity.Batch;
 import com.cqgcxy.online_study_system.entity.Course;
+import com.cqgcxy.online_study_system.entity.DatecChange;
 import com.cqgcxy.online_study_system.entity.ResultMsg;
 import com.cqgcxy.online_study_system.service.batchService;
 import com.cqgcxy.online_study_system.service.courseService;
@@ -65,51 +66,51 @@ public class batchConterllor {
 
     /**
      * 批次添加提交
-     * @param role_name
+     * @param begintime
+     * @param endtime
      * @param per
      * @return
      */
-//    @ResponseBody
-//    @RequestMapping("/roleAdd_submit")
-//    public ResultMsg roleAdd_submit(@RequestParam("begintime") String begintime,
-//                                    @RequestParam("endtime") String endtime,
-//                                    @RequestParam("per") String per []){
-//        Batch  batch = new Batch();
-//        try {
-//            batch.setBegintime();
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//        int i = roleService.insetRole(role,per);
-//        if (i==1){
-//            return new ResultMsg(1,"成功");
-//        }else {
-//            return new ResultMsg(0,"失败");
-//        }
-//    }
-//
-//    /**
-//     * 角色修改提交
-//     * @param role_id
-//     * @param role_name
-//     * @param per
-//     * @return
-//     */
-//    @ResponseBody
-//    @RequestMapping("/roleAdd_Edit")
-//    public ResultMsg roleAdd_Edit(  @RequestParam("role_id") String role_id,
-//                                    @RequestParam("role_name") String role_name,
-//                                    @RequestParam("per") String per []){
-//        Role role = new Role();
-//        role.setRole_id(Integer.parseInt(role_id));
-//        role.setRole_name(role_name);
-//
-//        int i = roleService.updateRolrAdmin(role,per);
-//        if (i==1){
-//            return new ResultMsg(1,"成功");
-//        }else {
-//            return new ResultMsg(0,"失败");
-//        }
-//    }
+    @ResponseBody
+    @RequestMapping("/batchAdd_submit")
+    public ResultMsg roleAdd_submit(@RequestParam("begintime") String begintime,
+                                    @RequestParam("endtime") String endtime,
+                                    @RequestParam("per") String per []){
+        Batch  batch = new Batch();
+        batch.setBegintime(new DatecChange().dateChange(begintime));
+        batch.setEndtime(new DatecChange().dateChange(endtime));
+        int i = batchService.insertBatch(batch,per);
+        if (i==1){
+            return new ResultMsg(1,"成功");
+        }else {
+            return new ResultMsg(0,"失败");
+        }
+    }
+
+    /**
+    * 角色修改提交
+     * @param batch_id
+     * @param begintime
+     * @param endtime
+     * @param per
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/batchAdd_Edit")
+    public ResultMsg roleAdd_Edit(  @RequestParam("batch_id") String batch_id,
+                                    @RequestParam("begintime") String begintime,
+                                    @RequestParam("endtime") String endtime,
+                                    @RequestParam("per") String per []){
+        Batch  batch = new Batch();
+        batch.setBatch_id(Integer.parseInt(batch_id));
+        batch.setBegintime(new DatecChange().dateChange(begintime));
+        batch.setEndtime(new DatecChange().dateChange(endtime));
+
+        int i = batchService.updateBatch(batch,per);
+        if (i==1){
+            return new ResultMsg(1,"成功");
+        }else {
+            return new ResultMsg(0,"失败");
+        } }
 
 }

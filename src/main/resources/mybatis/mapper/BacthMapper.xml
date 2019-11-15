@@ -9,14 +9,14 @@
         <result property="endtime" column="endtime"></result>
         <collection property="courses" ofType="com.cqgcxy.online_study_system.entity.Course">
             <id property="co_id" column="co_id"></id>
-            <result property="coursetime" column="coursetime"></result>
+            <result property="course" column="course"></result>
         </collection>
     </resultMap>
     <select id="selectBatch" resultMap="Batch">
         select * from batch,batch_course,course where batch.batch_id=batch_course.batch_id and batch_course.co_id=course.co_id
     </select>
 
-    <select id="selectBatchById" parameterMap="int" resultMap="Batch">
+    <select id="selectBatchById" parameterType="int" resultMap="Batch">
         select * from batch,batch_course,course where batch.batch_id=batch_course.batch_id and batch_course.co_id=course.co_id and batch.batch_id=#{batch_id}
     </select>
 
