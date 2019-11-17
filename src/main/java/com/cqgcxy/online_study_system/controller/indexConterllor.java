@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -34,10 +35,17 @@ public class indexConterllor {
      * @return
      */
     @RequestMapping("/login")
-    public String login(HttpServletRequest request){
+    public String login(HttpServletRequest request,Model model){
         HttpSession session=request.getSession();
         if(session.getAttribute("user")!=null) {
-            return "redirect:/index";
+            User user =(User) session.getAttribute("user");
+            if (user.getRole().getRole_name().equals("学生")){
+                model.addAttribute("user",user);
+                return "student/studentIndex";
+            }else {
+                model.addAttribute("user",user);
+                return "index";
+            }
         }else {
             return "/login";
         }
@@ -73,11 +81,14 @@ public class indexConterllor {
             User user1 = userService.selectUserIsStu(user);
             if (user1.getRole().getRole_name().equals("学生")){
                 session.setAttribute("user",user1);
-                return "redirect:/studentIndex";
+                model.addAttribute("user",user1);
+                return "student/studentIndex";
+
             }else {
                 if (user1.getStatus()==1){
                     session.setAttribute("user",user1);
-                    return "redirect:/index";
+                    model.addAttribute("user",user1);
+                    return "index";
                 }else {
                     model.addAttribute("msg","用户已停用");
                     return "login";
@@ -101,7 +112,7 @@ public class indexConterllor {
      * @return
      */
     @RequestMapping("/index")
-    public String index(HttpServletRequest request){
+    public String index(HttpServletRequest request, Model model){
         HttpSession session = request.getSession();
         User user = (User)session.getAttribute("user");
         if (session.getAttribute("user")!=null){

@@ -1,10 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>在线学习系统后台管理</title>
+    <link  href="css/font.css" th:href="@{/static/css/font.css}" rel="stylesheet">
+    <link  href="css/xadmin.css" th:href="@{/static/css/xadmin.css}" rel="stylesheet">
+    <script src="lib/layui/layui.js" charset="utf-8" th:src="@{/static/lib/layui/layui.js}"></script>
+    <script type="text/javascript" src="js/xadmin.js" th:src="@{/static/js/xadmin.js}"></script>
+    <script type="text/javascript" src="js/jquery.min.js" th:src="@{/static/js/jquery.min.js}"></script>
+    <script>
+        $(function(){
+            $("#exit").click(function(){
+                var url = "/exit_submit";
+                var param = {name:"11"};//表单序列化传递到后台
+                $.post(url, param, function(data) {
+                    if(data.flag==1){
+                        location.href="/login";
+                    }
+                });
+            });
+        })
+    </script>
 </head>
-<body>
-    学生页面
+<body class="index">
+<div class="container" style="background-color:#009688;">
+    <div class="logo">
+        <a href="./index.html">在线学习系统</a></div>
+    <div class="left_open">
+        <a><i title="展开左侧栏" class="iconfont">&#xe699;</i></a>
+    </div>
+
+    <ul class="layui-nav right" lay-filter="">
+        <li class="layui-nav-item">
+            <a href="javascript:;" th:text="${user.username}"></a>
+            <dl class="layui-nav-child">
+                <dd>
+                    <a onclick="xadmin.open('切换帐号','http://www.baidu.com')">修改密码</a></dd>
+                <dd>
+                    <a href="" id="exit">退出</a></dd>
+            </dl>
+        </li>
+    </ul>
+</div>
+<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+    <ul class="layui-tab-title" style="display: flex;justify-content: space-around;">
+        <li class="layui-this" lay-id="11">我的批次</li>
+        <li lay-id="22">其他批次</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+                <div class="layui-row layui-col-space15" style="width: 50%">
+                    <div class="layui-col-sm12 layui-col-md6">
+                        <div class="layui-card">
+                            <div class="layui-card-header">最新一周新增用户</div>
+                            <div class="layui-card-body" style="min-height: 140px;">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="layui-tab-item">
+                <div class="layui-row layui-col-space15" style="width: 50%">
+                    <div class="layui-col-sm12 layui-col-md6">
+                        <div class="layui-card">
+                            <div class="layui-card-header">周新增用户</div>
+                            <div class="layui-card-body" style="min-height: 140px;">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+
 </body>
+
 </html>
