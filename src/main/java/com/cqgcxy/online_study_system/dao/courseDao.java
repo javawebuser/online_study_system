@@ -10,5 +10,6 @@ import java.util.List;
  */
 public interface courseDao {
     List<Course> selectCourse();
+    Course selectCourseById(int co_id);
     int insertCourse(Course course);
 }

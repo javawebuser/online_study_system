@@ -1,7 +1,9 @@
 package com.cqgcxy.online_study_system.controller;
 
+import com.cqgcxy.online_study_system.entity.Batch;
 import com.cqgcxy.online_study_system.entity.ResultMsg;
 import com.cqgcxy.online_study_system.entity.User;
+import com.cqgcxy.online_study_system.service.batchService;
 import com.cqgcxy.online_study_system.service.userService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -18,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * @Author:32157
@@ -27,8 +30,9 @@ import javax.servlet.http.HttpSession;
 public class indexConterllor {
 
     @Autowired
-    com.cqgcxy.online_study_system.service.userService userService;
-
+    userService userService;
+    @Autowired
+    batchService batchService;
     /**
      * 登录页面
      * @param request
@@ -41,6 +45,8 @@ public class indexConterllor {
             User user =(User) session.getAttribute("user");
             if (user.getRole().getRole_name().equals("学生")){
                 model.addAttribute("user",user);
+                model.addAttribute("userBatch",batchService.userBatch(user.getUser_id()));
+                model.addAttribute("notUserBatch",batchService.notUserBatch(user.getUser_id()));
                 return "student/studentIndex";
             }else {
                 model.addAttribute("user",user);
@@ -82,6 +88,8 @@ public class indexConterllor {
             if (user1.getRole().getRole_name().equals("学生")){
                 session.setAttribute("user",user1);
                 model.addAttribute("user",user1);
+                model.addAttribute("userBatch",batchService.userBatch(user1.getUser_id()));
+                model.addAttribute("notUserBatch",batchService.notUserBatch(user1.getUser_id()));
                 return "student/studentIndex";
 
             }else {

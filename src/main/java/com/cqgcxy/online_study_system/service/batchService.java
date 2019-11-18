@@ -2,8 +2,10 @@ package com.cqgcxy.online_study_system.service;
 
 import com.cqgcxy.online_study_system.dao.batchDao;
 import com.cqgcxy.online_study_system.dao.batch_courseDao;
+import com.cqgcxy.online_study_system.dao.batch_userDao;
 import com.cqgcxy.online_study_system.entity.Batch;
 import com.cqgcxy.online_study_system.entity.Batch_course;
+import com.cqgcxy.online_study_system.entity.Batch_user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +21,8 @@ public class batchService {
     batchDao batchDao;
     @Autowired
     batch_courseDao batch_courseDao;
+    @Autowired
+    batch_userDao batch_userDao;
 
     //批次列表
     public List<Batch> selectBatch(){
@@ -83,8 +87,24 @@ public class batchService {
             return 0;
         }
     };
-
+    //批次查询
     public Batch selectBatchById(int batch_id) {
         return batchDao.selectBatchById(batch_id);
     }
+    //查询我的批次
+    public List<Batch> userBatch(int user_id){
+        return batchDao.userBatch(user_id);
+    };
+    //查询其他批次
+    public List<Batch> notUserBatch(int user_id){
+        return batchDao.notUserBatch(user_id);
+    };
+    //添加用户批次
+    public int insertBatchUser(Batch_user batch_user){
+        return batch_userDao.insertBatchUser(batch_user);
+    };
+    //移除用户批次
+    public int deleteBatchUser(Batch_user batch_user){
+        return batch_userDao.deleteBatchUser(batch_user);
+    };
 }

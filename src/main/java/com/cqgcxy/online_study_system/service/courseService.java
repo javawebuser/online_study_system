@@ -21,6 +21,10 @@ public class courseService {
     public List<Course> selectCourse(){
         return courseDao.selectCourse();
     };
+    //根据id查询课程
+    public Course selectCourseById(int co_id){
+      return courseDao.selectCourseById(co_id);
+    };
     //插入课程
     public int insertCourse(Course course){
         return courseDao.insertCourse(course);

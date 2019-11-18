@@ -49,24 +49,30 @@
     </ul>
     <div class="layui-tab-content">
         <div class="layui-tab-item layui-show">
-                <div class="layui-row layui-col-space15" style="width: 50%">
+                <div class="layui-row layui-col-space15" style="width: 50%" th:each="userBatch:${userBatch}">
                     <div class="layui-col-sm12 layui-col-md6">
                         <div class="layui-card">
-                            <div class="layui-card-header">最新一周新增用户</div>
+                            <div class="layui-card-header" style="display: flex;justify-content: space-around"><span>[[${userBatch.begintime}]]~[[${userBatch.endtime}]]</span>
+                                <span><button class="layui-btn layui-btn-sm" th:onclick="batchUserRemove([[${userBatch.batch_id}]],[[${user.user_id}]])" href="javascript:;" ><i class="layui-icon">&#xe640;</i>点击删除</button></span></div>
                             <div class="layui-card-body" style="min-height: 140px;">
-
+                                <div th:each="courses:${userBatch.courses}" style="display: flex;justify-content: space-around;margin-top: 2px">
+                                    <span style="width: 50%;text-align: center">[[${courses.getCourse()}]]</span>
+                                    <span style="width: 50%;text-align: center"><button class="layui-btn layui-btn-sm" th:onclick="toStudy([[${courses.co_id}]])" th:href="/" >进入学习</button></span></div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
         </div>
         <div class="layui-tab-item">
-                <div class="layui-row layui-col-space15" style="width: 50%">
+                <div class="layui-row layui-col-space15" style="width: 50%" th:each="notUserBatch:${notUserBatch}">
                     <div class="layui-col-sm12 layui-col-md6">
                         <div class="layui-card">
-                            <div class="layui-card-header">周新增用户</div>
+                            <div class="layui-card-header" style="display: flex;justify-content: space-around"><span>[[${notUserBatch.begintime}]]~[[${notUserBatch.endtime}]]</span>
+                                <span><button class="layui-btn layui-btn-sm" th:onclick="batchUserAdd([[${notUserBatch.batch_id}]],[[${user.user_id}]])" href="javascript:;" ><i class="layui-icon">&#xe654;</i>点击添加</button></span>
+                            </div>
                             <div class="layui-card-body" style="min-height: 140px;">
-
+                                <p th:each="courses:${notUserBatch.courses}" th:text="${courses.getCourse()}"></p>
                             </div>
                         </div>
                     </div>
@@ -74,7 +80,32 @@
         </div>
     </div>
 </div>
-
+<script>
+    function batchUserAdd(batch_id,user_id) {
+        var url = "/batchUserAdd";
+        var param = {batch_id:batch_id,user_id:user_id};//表单序列化传递到后台
+        $.post(url, param, function(data) {
+            if (data.flag==1){
+                xadmin.father_reload();
+            }else {
+                layer.msg('增加失败!',{icon: 5,time:1000});
+            }
+        });
+        return false;
+    }
+    function batchUserRemove(batch_id,user_id) {
+        var url = "/batchUserRemove";
+        var param = {batch_id:batch_id,user_id:user_id};//表单序列化传递到后台
+        $.post(url, param, function(data) {
+            if (data.flag==1){
+                xadmin.father_reload();
+            }else {
+                layer.msg('增加失败!',{icon: 5,time:1000});
+            }
+        });
+        return false;
+    }
+</script>
 
 </body>
 

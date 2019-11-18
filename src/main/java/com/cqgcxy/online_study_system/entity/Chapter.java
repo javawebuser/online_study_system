@@ -1,5 +1,7 @@
 package com.cqgcxy.online_study_system.entity;
 
+import java.util.List;
+
 /**
  * @Author:32157
  * @DATE:2019/10/28
@@ -10,6 +12,15 @@ public class Chapter {
     private Integer chapter_id;//章节id
     private String chapter;//章节名字
     private Integer co_id;//课程id
+    private List<CourseWare> courseWares;
+
+    public List<CourseWare> getCourseWares() {
+        return courseWares;
+    }
+
+    public void setCourseWares(List<CourseWare> courseWares) {
+        this.courseWares = courseWares;
+    }
 
     public Integer getChapter_id() {
         return chapter_id;

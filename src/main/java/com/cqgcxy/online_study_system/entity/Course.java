@@ -1,5 +1,7 @@
 package com.cqgcxy.online_study_system.entity;
 
+import java.util.List;
+
 /**
  * @Author:32157
  * @DATE:2019/10/28
@@ -10,7 +12,16 @@ public class Course {
      private Integer co_id;//课程id
      private String course;//课程名
      private int coursetime;//课时
-     private  int score;//课程学分
+     private int score;//课程学分
+     private List<Chapter> chapters;//课程章节
+
+    public List<Chapter> getChapters() {
+        return chapters;
+    }
+
+    public void setChapters(List<Chapter> chapters) {
+        this.chapters = chapters;
+    }
 
     public Integer getCo_id() {
         return co_id;

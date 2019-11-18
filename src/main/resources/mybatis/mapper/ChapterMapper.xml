@@ -7,6 +7,10 @@
         select * from chapter
     </select>
 
+    <select id="selectCourseById" parameterType="int" resultType="com.cqgcxy.online_study_system.entity.Course">
+        select * from course where co_id="#{co_id}"
+    </select>
+
     <insert id="insertChapter" parameterType="com.cqgcxy.online_study_system.entity.Chapter">
         insert into chapter(chapter,co_id)
         value(#{chapter},#{co_id})

@@ -1,9 +1,6 @@
 package com.cqgcxy.online_study_system.controller;
 
-import com.cqgcxy.online_study_system.entity.Batch;
-import com.cqgcxy.online_study_system.entity.Course;
-import com.cqgcxy.online_study_system.entity.DatecChange;
-import com.cqgcxy.online_study_system.entity.ResultMsg;
+import com.cqgcxy.online_study_system.entity.*;
 import com.cqgcxy.online_study_system.service.batchService;
 import com.cqgcxy.online_study_system.service.courseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,6 +108,41 @@ public class batchConterllor {
             return new ResultMsg(1,"成功");
         }else {
             return new ResultMsg(0,"失败");
-        } }
+        }
+    }
+
+    /**
+     * 批次用户添加
+     * @param batch_user
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/batchUserAdd")
+    public ResultMsg batchUserAdd( Batch_user batch_user ){
+        int i = batchService.insertBatchUser(batch_user);
+        if (i==1){
+            return new ResultMsg(1,"成功");
+        }else {
+            return new ResultMsg(0,"失败");
+        }
+    }
+
+    /**
+     * 批次用户移除
+     * @param batch_user
+     * @return
+     */
+    @ResponseBody
+    @RequestMapping("/batchUserRemove")
+    public ResultMsg batchUserRemove( Batch_user batch_user ){
+        int i = batchService.deleteBatchUser(batch_user);
+        if (i==1){
+            return new ResultMsg(1,"成功");
+        }else {
+            return new ResultMsg(0,"失败");
+        }
+    }
+
+
 
 }

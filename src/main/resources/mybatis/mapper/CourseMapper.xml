@@ -7,6 +7,10 @@
         select * from course
     </select>
 
+    <select id="selectCourseById" parameterType="int" resultType="com.cqgcxy.online_study_system.entity.Course">
+        select * from course where co_id="#{co_id}"
+    </select>
+
     <insert id="insertCourse" parameterType="com.cqgcxy.online_study_system.entity.Course">
         insert into course(course,coursetime,score)
         value(#{course},#{coursetime},#{score})
