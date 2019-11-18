@@ -11,5 +11,6 @@ import java.util.List;
  */
 public interface coursewareDao {
     List<CourseWare> selectCourseWare();
+    List<CourseWare> selectCourseWareById(int chapter_id);
     int insertCourseWare(CourseWare courseWare);
 }

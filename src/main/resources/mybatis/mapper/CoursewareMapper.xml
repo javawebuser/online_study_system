@@ -6,6 +6,11 @@
     <select id="selectCourseWare" resultType="com.cqgcxy.online_study_system.entity.CourseWare">
         select * from courseware
     </select>
+
+    <select id="selectCourseWareById" parameterType="int" resultType="com.cqgcxy.online_study_system.entity.CourseWare">
+        select * from courseware where chapter_id=#{chapter_id}
+    </select>
+
     <insert id="insertCourseWare" parameterType="com.cqgcxy.online_study_system.entity.CourseWare">
         insert into courseware (chapter_id,address) value (#{chapter_id},#{address})
     </insert>

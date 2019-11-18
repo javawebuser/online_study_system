@@ -57,8 +57,7 @@
                             <div class="layui-card-body" style="min-height: 140px;">
                                 <div th:each="courses:${userBatch.courses}" style="display: flex;justify-content: space-around;margin-top: 2px">
                                     <span style="width: 50%;text-align: center">[[${courses.getCourse()}]]</span>
-                                    <span style="width: 50%;text-align: center"><button class="layui-btn layui-btn-sm" th:onclick="toStudy([[${courses.co_id}]])" th:href="/" >进入学习</button></span></div>
-                                </div>
+                                    <span style="width: 50%;text-align: center"><a class="layui-btn layui-btn-sm" th:href="@{'/studentCourse?co_id='+${courses.co_id}}" target="_blank">进入学习</a></span></div>
                             </div>
                         </div>
                     </div>

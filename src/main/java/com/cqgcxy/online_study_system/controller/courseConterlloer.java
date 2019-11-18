@@ -1,9 +1,6 @@
 package com.cqgcxy.online_study_system.controller;
 
-import com.cqgcxy.online_study_system.entity.Chapter;
-import com.cqgcxy.online_study_system.entity.Course;
-import com.cqgcxy.online_study_system.entity.CourseWare;
-import com.cqgcxy.online_study_system.entity.ResultMsg;
+import com.cqgcxy.online_study_system.entity.*;
 import com.cqgcxy.online_study_system.service.chapterService;
 import com.cqgcxy.online_study_system.service.courseService;
 import com.cqgcxy.online_study_system.service.coursewareService;
@@ -17,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 
@@ -38,11 +37,7 @@ public class courseConterlloer {
     @RequestMapping("/courseIndex")
     public String courseIndex (Model model){
         List<Course> courses = courseService.selectCourse();
-        List<Chapter> chapters = chapterService.selectChapter();
-        List<CourseWare> courseWares = coursewareService.selectCourseWare();
         model.addAttribute("courses",courses);
-        model.addAttribute("chapters",chapters);
-        model.addAttribute("courseWares",courseWares);
         return "/management/course/courseIndex";
     }
 
@@ -69,6 +64,21 @@ public class courseConterlloer {
             return new ResultMsg(1, "成功");
         } else {
             return new ResultMsg(0, "失败");
+        }
+    }
+
+    //课程学习
+    @RequestMapping("/studentCourse")
+    public String studentCourse(@RequestParam("co_id") String co_id, Model model, HttpServletRequest httpRequest) {
+        HttpSession session = httpRequest.getSession();
+        User user = (User)session.getAttribute("user");
+        if (session.getAttribute("user")!=null){
+            model.addAttribute("user",user);
+            System.out.println(user.getUsername());
+            model.addAttribute("course",courseService.selectCourseById(Integer.parseInt(co_id)));
+            return "student/studentCourseIndex";
+        }else{
+            return "login";
         }
     }
 }

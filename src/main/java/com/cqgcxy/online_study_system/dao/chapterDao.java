@@ -10,5 +10,6 @@ import java.util.List;
  */
 public interface chapterDao {
     List<Chapter> selectChapter();
+    List<Chapter> selectChapterById(int co_id);
     int insertChapter(Chapter chapter);
 }

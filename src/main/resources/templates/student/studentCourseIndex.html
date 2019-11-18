@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>在线学习系统后台管理</title>
+    <link  href="css/font.css" th:href="@{/static/css/font.css}" rel="stylesheet">
+    <link  href="css/xadmin.css" th:href="@{/static/css/xadmin.css}" rel="stylesheet">
+    <script src="lib/layui/layui.js" charset="utf-8" th:src="@{/static/lib/layui/layui.js}"></script>
+    <script type="text/javascript" src="js/xadmin.js" th:src="@{/static/js/xadmin.js}"></script>
+    <script type="text/javascript" src="js/jquery.min.js" th:src="@{/static/js/jquery.min.js}"></script>
+    <script>
+        $(function(){
+            $("#exit").click(function(){
+                var url = "/exit_submit";
+                var param = {name:"11"};//表单序列化传递到后台
+                $.post(url, param, function(data) {
+                    if(data.flag==1){
+                        location.href="/login";
+                    }
+                });
+            });
+        })
+    </script>
+</head>
+<body class="index">
+<div class="container" style="background-color:#009688;">
+    <div class="logo">
+        <a href="./index.html">在线学习系统</a></div>
+    <div class="left_open">
+        <a><i title="展开左侧栏" class="iconfont">&#xe699;</i></a>
+    </div>
+
+    <ul class="layui-nav right" lay-filter="">
+        <li class="layui-nav-item">
+            <a href="javascript:;" th:text="${user.username}"></a>
+            <dl class="layui-nav-child">
+                <dd>
+                    <a onclick="xadmin.open('切换帐号','http://www.baidu.com')">修改密码</a></dd>
+                <dd>
+                    <a href="" id="exit">退出</a></dd>
+            </dl>
+        </li>
+    </ul>
+</div>
+<div class="left-nav">
+    <div id="side-nav">
+        <ul id="nav">
+            <li th:each="chapter:${course.chapters}">
+                <a href="javascript:;">
+                    <i class="iconfont left-nav-li" th:lay-tips="${chapter.chapter}"></i>
+                    <cite>[[${chapter.chapter}]]</cite>
+                    <i class="iconfont nav_right">&#xe697;</i></a>
+                <ul class="sub-menu">
+                    <li th:each="courseWare:${chapter.courseWares}">
+                            <video width="320" height="240" controls autoplay >
+                                <source th:src="@{./upload/{address}(address=${courseWare.address})}" type="video/mp4">
+                            </video>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+<script>
+    layui.use(['form'], function(){
+        form = layui.form;
+
+    });
+
+</script>
+</body>
+
+</html>
