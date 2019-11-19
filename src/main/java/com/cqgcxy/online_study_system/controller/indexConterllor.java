@@ -160,6 +160,16 @@ public class indexConterllor {
     }
 
     /**
+     *
+     * @return
+     */
+    @RequestMapping("/Course")
+    public  String welcome(@RequestParam("course") String course,Model model) {
+        model.addAttribute("course",course);
+        return "/course";
+    }
+
+    /**
      * 退出请求
      * @param request
      * @param name

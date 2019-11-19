@@ -1,6 +1,7 @@
 package com.cqgcxy.online_study_system.service;
 
 import com.cqgcxy.online_study_system.dao.coursewareDao;
+import com.cqgcxy.online_study_system.entity.Course;
 import com.cqgcxy.online_study_system.entity.CourseWare;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,5 +24,9 @@ public class coursewareService {
     //根据章节插入课件
     public int insertCourseWare(CourseWare courseWare){
         return coursewareDao.insertCourseWare(courseWare);
+    };
+    //根据id查询数据
+    public CourseWare CourseWareById(int Id){
+        return coursewareDao.CourseWareById(Id);
     };
 }

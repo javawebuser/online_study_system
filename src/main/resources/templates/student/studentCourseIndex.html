@@ -42,30 +42,60 @@
         </li>
     </ul>
 </div>
+<!-- 顶部结束 -->
+<!-- 中部开始 -->
+<!-- 左侧菜单开始 -->
 <div class="left-nav">
     <div id="side-nav">
         <ul id="nav">
-            <li th:each="chapter:${course.chapters}">
-                <a href="javascript:;">
-                    <i class="iconfont left-nav-li" th:lay-tips="${chapter.chapter}"></i>
-                    <cite>[[${chapter.chapter}]]</cite>
-                    <i class="iconfont nav_right">&#xe697;</i></a>
-                <ul class="sub-menu">
-                    <li th:each="courseWare:${chapter.courseWares}">
-                            <video width="320" height="240" controls autoplay >
-                                <source th:src="@{./upload/{address}(address=${courseWare.address})}" type="video/mp4">
-                            </video>
-                    </li>
-                </ul>
-            </li>
+                <li th:each="chapter:${course.chapters}">
+                    <a href="javascript:;">
+                        <i class="iconfont left-nav-li" th:lay-tips="${chapter.chapter}"></i>
+                        <cite>[[${chapter.chapter}]]</cite>
+                        <i class="iconfont nav_right">&#xe697;</i></a>
+                    <ul class="sub-menu">
+                        <li th:each="courseWare,cw:${chapter.courseWares}">
+                            <a th:onclick="courseware([[${courseWare.Id}]],[[${cw.index+1}]])">
+                                <i class="iconfont">&#xe6a7;</i>
+                                <cite>视频[[${cw.index+1}]]</cite></a>
+                        </li>
+                    </ul>
+                </li>
         </ul>
     </div>
 </div>
+<!-- <div class="x-slide_left"></div> -->
+<!-- 左侧菜单结束 -->
+<!-- 右侧主体开始 -->
+<div class="page-content">
+    <div class="layui-tab tab" lay-filter="xbs_tab" lay-allowclose="false">
+        <ul class="layui-tab-title">
+            <li class="home">
+                <i class="layui-icon">&#xe68e;</i>我的桌面</li></ul>
+        <div class="layui-unselect layui-form-select layui-form-selected" id="tab_right">
+            <dl>
+                <dd data-type="this">关闭当前</dd>
+                <dd data-type="other">关闭其它</dd>
+                <dd data-type="all">关闭全部</dd></dl>
+        </div>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <iframe th:src="@{/Course?course={course}(course=${course.course})}" frameborder="0" scrolling="yes" class="x-iframe"></iframe>
+            </div>
+        </div>
+        <div id="tab_show"></div>
+    </div>
+</div>
+<div class="page-content-bg"></div>
+<style id="theme_style"></style>
 <script>
     layui.use(['form'], function(){
         form = layui.form;
 
     });
+    function courseware(Id,sum) {
+        xadmin.add_tab('视频'+sum+'','courseWareById?Id='+Id+'');
+    }
 
 </script>
 </body>

@@ -7,6 +7,7 @@ import com.cqgcxy.online_study_system.service.chapterService;
 import com.cqgcxy.online_study_system.service.coursewareService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -30,7 +31,7 @@ public class coursewareController {
         view.addObject("chapter_id",chapter_id);
         return view;
     }
-
+    //添加课件
     @ResponseBody
     @RequestMapping("/coursewareAdd_submit")
     public ResultMsg coursewareAdd_submit(
@@ -45,5 +46,11 @@ public class coursewareController {
         }else {
             return new ResultMsg(0, "失败");
         }
+    }
+    //
+    @RequestMapping("/courseWareById")
+    public String courseWareById(@RequestParam("Id") String Id, Model model){
+        model.addAttribute("CourseWare",coursewareService.CourseWareById(Integer.parseInt(Id)));
+        return "student/courseWare";
     }
 }
