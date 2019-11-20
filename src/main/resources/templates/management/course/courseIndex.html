@@ -46,7 +46,7 @@
                             <th width="250">操作</th>
                         </thead>
                         <tbody class="x-cate">
-                        <div th:each="course:${courses}" name="co">
+                        <th:block th:each="course:${courses}">
                             <tr th:cate-id="'course'+${course.co_id}"  fid='0' >
                                 <td>
                                     <input type="checkbox" name="" lay-skin="primary">
@@ -64,14 +64,13 @@
                                     <button class="layui-btn-danger layui-btn layui-btn-xs"  onclick="member_del(this,'要删除的id')" href="javascript:;" ><i class="layui-icon">&#xe640;</i>删除</button>
                                 </td>
                             </tr>
-                            <div th:each="chapter:${course.chapters}" name="ch">
+                            <th:block th:each="chapter:${course.chapters}">
                                 <tr th:case-id="'chapter'+${chapter.chapter_id}" th:fid="'course'+${chapter.co_id}">
-                                    <td colspan="5" style="padding-left:20%">
+                                    <td colspan="5" style="padding-left:15%">
                                         &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <i class="layui-icon x-show" status='true'>&#xe623;</i>
+                                        <i class="layui-icon xx-show" status='true'>&#xe623;</i>
                                         [[${chapter.chapter}]]
                                     </td>
-
                                     <td class="td-manage">
                                         <button class="layui-btn layui-btn layui-btn-xs"  onclick="xadmin.open('编辑','admin-edit.html')" ><i class="layui-icon">&#xe642;</i>编辑</button>
                                         <button class="layui-btn layui-btn-warm layui-btn-xs"  th:onclick="coursewareAdd([[${chapter.chapter_id}]],[[${chapter.chapter}]])" ><i class="layui-icon">&#xe642;</i>添加课件</button>
@@ -79,18 +78,18 @@
                                     </td>
                                 </tr>
                                 <tr th:each="courseWare:${chapter.courseWares}" th:case-id="${courseWare.Id}" th:fid="'chapter'+${courseWare.chapter_id}">
-                                    <td colspan="5" style="padding-left:26%">
+                                    <td colspan="5" style="padding-left:18%">
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                         <video width="320" height="240" controls>
                                             <source th:src="@{./upload/{address}(address=${courseWare.address})}" type="video/mp4">
                                         </video>
-                                    </td>
                                     <td class="td-manage">
                                         <button class="layui-btn layui-btn layui-btn-xs"  onclick="xadmin.open('编辑','admin-edit.html')" ><i class="layui-icon">&#xe642;</i>编辑</button>
                                         <button class="layui-btn-danger layui-btn layui-btn-xs"  onclick="member_del(this,'要删除的id')" href="javascript:;" ><i class="layui-icon">&#xe640;</i>删除</button>
                                     </td>
                                 </tr>
-                            </div>
-                        </div>
+                            </th:block>
+                        </th:block>
                         </tbody>
                     </table>
                 </div>
@@ -116,16 +115,6 @@
     // 分类展开收起的分类的逻辑
     //
     $(function(){
-        var courses = $("[name=co]");
-        for (var i=0; i <courses.length; i++) {
-            var course = courses.eq(i).contents();
-            courses.eq(i).replaceWith("");
-        }
-        var chapters = $("[name=ch]");
-        for (var i=0; i <chapters.length; i++) {
-            var chapter = chapters.eq(i).contents();
-            chapters.eq(i).replaceWith("");
-        }
         $("tbody.x-cate tr[fid!='0']").hide();
         // 栏目多级显示效果
         $('.x-show').click(function () {
@@ -135,14 +124,24 @@
                 cateId = $(this).parents('tr').attr('cate-id');
                 $("tbody tr[fid="+cateId+"]").show();
             }else{
-                cateIds = [];
                 $(this).html('&#xe623;');
                 $(this).attr('status','true');
                 cateId = $(this).parents('tr').attr('cate-id');
-                getCateId(cateId);
-                for (var i in cateIds) {
-                    $("tbody tr[cate-id="+cateIds[i]+"]").hide().find('.x-show').html('&#xe623;').attr('status','true');
-                }
+                $("tbody tr[fid="+cateId+"]").hide();
+            }
+        })
+
+        $('.xx-show').click(function () {
+            if($(this).attr('status')=='true'){
+                $(this).html('&#xe625;');
+                $(this).attr('status','false');
+                cateId = $(this).parents('tr').attr('case-id');
+                $("tbody tr[fid="+cateId+"]").show();
+            }else{
+                $(this).html('&#xe623;');
+                $(this).attr('status','true');
+                cateId = $(this).parents('tr').attr('case-id');
+                $("tbody tr[fid="+cateId+"]").hide();
             }
         })
     })
